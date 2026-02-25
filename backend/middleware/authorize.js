@@ -1,0 +1,24 @@
+// middleware/authorize.js
+export const authorize = (...allowedRoles) => {
+  return (req, res, next) => {
+    if (!req.user) {
+      return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
+
+    if (!allowedRoles.includes(req.user.role)) {
+      return res.status(403).json({ success: false, message: "Your are not authorized to access this page" });
+    }
+
+    next();
+  };
+};
+
+/**
+ How to useis :
+ router.post(
+  "/verifyvendor/:vendorId",
+  authMiddleware,
+  authorize("admin"),
+  verifyVendor
+);
+ */
