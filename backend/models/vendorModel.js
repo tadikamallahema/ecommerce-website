@@ -94,3 +94,9 @@ export const rejectVendor=async(id,reason)=>{
    );
    return res[0];
 }
+export const getPendingVendors=async()=>{
+    const [res]=await db.execute(
+        `select * from vendor where is_admin_verified=false`
+    )
+    return res;
+}

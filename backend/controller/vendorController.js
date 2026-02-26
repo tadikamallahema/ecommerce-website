@@ -17,3 +17,4 @@ export const getNotVeriedVendors=async(req,res)=>{
         return res.status(500).json({success:false,messaage:err.messaage});
     }
 }
+//vendor - see all productsby vendor , update stock quantity , delete product ,create & update product 
