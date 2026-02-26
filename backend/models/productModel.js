@@ -64,9 +64,9 @@ export const getProductById=async(id)=>{
     );
     return res[0];
 }
-export const deleteProduct=async(id)=>{
+export const deleteProduct=async(product_id,vendor_id)=>{
     const [res]=await db.execute(
-        `update product set is_active=0 where id=?`,[id]
+        `update product set is_active=0 where id=? and vendor_id=?`,[product_id,vendor_id]
     );
     return res;
 }

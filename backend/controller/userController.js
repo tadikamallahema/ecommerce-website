@@ -1,7 +1,7 @@
 //usercontroller -get allproducts ,  get products by id 
-//, filter , sort ,getProductsByCategory
+// , sort ,getProductsByCategory
 
-import { filterProduct, getAllProducts, getProductById } from "../models/productModel.js";
+import { filterProduct, getAllProducts, getProductById, getProductsByCategory, sortProducts } from "../models/productModel.js";
 
 export const getAllProductsVe=async(req,res)=>{
   try{
@@ -37,6 +37,31 @@ export const filterProducts=async(req,res)=>{
         const product=await filterProduct(minPrice,maxPrice,categoryId);
         return res.status(200).json({success:true,message:"Products are filtered ",product});
     }catch (err) {
+    return res.status(500).json({ success: false, message: err.message });
+  }
+}
+
+export const userSortProducts=async(req,res)=>{
+    const{sortBy,order}=req.query;
+    try{
+      const products =await sortProducts(sortBy,order);
+      if(!products ||products.length===0){
+        return res.status(404).json({ success: false, message: "No products found" });
+      }
+      return res.status(200).json({ success: true, products });
+    }catch (err) {
+    return res.status(500).json({ success: false, message: err.message });
+  }
+}
+export const getAllProductsByCategory=async(req,res)=>{
+  const {categoryId}=req.params;
+  if(!categoryId){
+    return res.status(400).json({success:false,message:"No product is found "});
+  }
+  try{
+    const product=await getProductsByCategory(categoryId);
+    return res.status(200).json({success:true,message:`List of products of category ${categoryId}`,product})
+  }catch (err) {
     return res.status(500).json({ success: false, message: err.message });
   }
 }
