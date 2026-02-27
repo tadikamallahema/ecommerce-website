@@ -51,11 +51,11 @@ export const getProductsByVendorV=async(req,res)=>{
        return res.status(400).json({success:false,message:"No Vendor is found "}); 
     }
     try{
-        const products =await getProductsByVendor(vendorId);
-        if(!products || products.length==0){
+        const product =await getProductsByVendor(vendorId);
+        if(!product || product.length==0){
            return res.status(404).json({ success: false, message: "No products found" }); 
         }
-        return res.status(200).json({ success: true, products });
+        return res.status(200).json({ success: true, product});
     }catch (err) {
     return res.status(500).json({ success: false, message: err.message });
   }

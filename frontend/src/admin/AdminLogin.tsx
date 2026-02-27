@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 interface Admin{
     name:string;
     email:string;
@@ -11,6 +12,7 @@ const AdminLogin = () => {
         email:'',
         password:''
     });
+    const navigate=useNavigate();
     const handleChange=(e:React.ChangeEvent<HTMLInputElement>)=>{
         setForm(prev=>({
             ...prev,
@@ -25,7 +27,8 @@ const AdminLogin = () => {
                 withCredentials:true
             });
         alert('Admin Logged in successfully');
-        //console.log(res.data);
+        console.log(res.data);
+        navigate('/admin');
         }catch(err:any){
             alert(err.message);
         }

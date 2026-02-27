@@ -13,11 +13,11 @@ authRoutes.post('/vlogin',vendorLogin);
 //authRoutes.post('/areg',adminRegister);
 authRoutes.post('/alog',adminLogin);
 
-authRoutes.get("/check", authMiddleware,authorize("user"), (req, res) => {
-    console.log("You are authenticated")
-    return res.status(200).json({
-        message: "Auth middleware is working!",
-        user: req.user // contains id and role from JWT
-    });
+authRoutes.get("/check", authMiddleware, (req, res) => {
+  return res.status(200).json({
+    success: true,
+    role: req.user.role,
+    id: req.user.id,
+  });
 });
 export default authRoutes;

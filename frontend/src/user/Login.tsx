@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 interface User{
     email:string;
@@ -10,6 +11,7 @@ const Login = () => {
         email:'',
         password:''
     });
+    const navigate=useNavigate();
     const handleChange=(e:React.ChangeEvent<HTMLInputElement>)=>{
         setForm(prev=>({
             ...prev,
@@ -24,6 +26,7 @@ const Login = () => {
                     withCredentials:true //I want to send cookies along with this request
                 });
             alert('Login Successfull');
+            navigate('/user');
             console.log(res.data);
         }catch(err:any){
             alert(err.message);

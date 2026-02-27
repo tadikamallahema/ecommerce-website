@@ -7,11 +7,11 @@ const AdminDashboard = () => {
       <h3> Admin Dashboard</h3>
       <nav>
         <ul>
-        <li><Link to="/adminv/verify">Approve Vendor</Link></li>
-        <li><Link to="/admin/verifyprod">Approve Products</Link></li>
+        <li><Link to="/admin/verifyvendors">Approve Vendor</Link></li>
+        <li><Link to="/admin/verifyproducts">Approve Products</Link></li>
         <li><Link to="/admin/createcategory">Create Categories</Link></li>
         <li><Link to="/admin/manageCategories">Manage Categories</Link></li>
-        <li><Link to="/admin/getAllProducts">View all Products</Link></li>
+        <li><Link to="/admin/products">View all Products</Link></li>
         {/* <li><Link></Link></li> */}
         </ul>
       </nav>

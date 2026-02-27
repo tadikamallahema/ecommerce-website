@@ -31,7 +31,7 @@ const ProtectedRoutes=({children,allowedRoles}:protectedProps)=>{
         };
         checkAuth();
     },[]);
-    if(isAuthenticated===null) return <div>Loading..</div>;
+    if(isAuthenticated===null) return <div>Loading..waiting for login to access page </div>;
     if(!isAuthenticated) return <Navigate to="/login"/>;
 
     return <>{children}</>

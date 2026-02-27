@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 interface Vendor{
     email:string;
@@ -10,6 +11,7 @@ const LoginV = () => {
         email:'',
         password:''
     });
+    const navigate=useNavigate();
     const handleChange=(e:React.ChangeEvent<HTMLInputElement>)=>{
         setForm(prev=>({
             ...prev,
@@ -26,6 +28,7 @@ const LoginV = () => {
             alert('Login Successfull');
             console.log(res.data);
             console.log(form);
+            navigate('/vendor');
         }catch(err:any){
             alert(err.message);
             console.log(err);
