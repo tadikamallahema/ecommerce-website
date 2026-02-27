@@ -75,6 +75,7 @@ export const AdminDeleteCategory=async(req,res)=>{
     return res.status(500).json({success:false,message:err.message});
   }
 }
+/*
 export const createProductA=async(req,res)=>{
   const {name,slug,sku,price, discount_price,stock_quantity,description,main_image,vendor_id,category_id}=req.body;
   if(!name ||!sku ||!price ||!discount_price|| stock_quantity===undefined ||stock_quantity===null || ! description || !slug ||! main_image|| !vendor_id|| !category_id){
@@ -91,6 +92,7 @@ export const createProductA=async(req,res)=>{
     return res.status(500).json({success:false,message:err.message});
   }
 }
+  */
 export const verifyProduct=async(req,res)=>{
     const {productId}=req.params;
     const {approve}=req.body;

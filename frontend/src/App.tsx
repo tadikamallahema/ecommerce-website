@@ -8,26 +8,35 @@ import AdminLogin from "./admin/AdminLogin.tsx";
 import Home from "./user/Home.tsx";
 import ProtectedRoutes from "./components/ProtectedRoutes.tsx";
 import ApproveVendor from "./admin/ApproveVendor.tsx";
+import AdminDashboard from "./admin/AdminDashboard.tsx";
+import ApproveProduct from "./admin/ApproveProduct.tsx";
+import ManageCategories from "./admin/ManageCategories.tsx";
+import GetAllProducts from "./admin/GetAllProducts.tsx";
 
 function App() {
   
   return (
     <>
-      <h1>Hello is my APP.jsx working?</h1>
-      {/* <Navbar/> */}
+      <AdminDashboard/>
+      {/*
+      <ApproveProduct/>
+      <h1>Hello is my APP.jsx working?</h1> <Navbar/> */}
      {/*  <SignUp/> */}
       <Routes>
         <Route path="/register" element={<SignUp/>}/>
         <Route path="/login" element={<Login/>}/>
-        <Route path="/home" element={
+        {/* <Route path="/home" element={
           <ProtectedRoutes>
             <Home/>
           </ProtectedRoutes>
-        }/>
+        }/> */}
         <Route path="/vendor/login" element={<LoginV/>}/>
         <Route path="/vendor/register" element={<VRegister/>}/>
         <Route path="/admin/login" element={<AdminLogin/>}/>
         <Route path="/adminv/verify" element={<ApproveVendor/>}/>
+        <Route path="/admin/verifyprod" element={<ApproveProduct/>}/>
+        <Route path="/admin/manageCategories" element={<ManageCategories/>}/>
+        <Route path="/admin/getAllProducts" element={<GetAllProducts/>}/>
       </Routes>
     </>
   )
