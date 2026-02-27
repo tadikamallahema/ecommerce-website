@@ -54,13 +54,13 @@ export const updateProduct=async(id,name,slug,sku,price, discount_price,stock_qu
 }
 export const getAllProducts=async()=>{
     const [res]=await db.execute(
-        `select * from product where is_active=1 and is_admin_verified=1`
+        `select * from product where is_active=1 `
     );
     return res;
 }
 export const getProductById=async(id)=>{
     const [res]=await db.execute(
-        `select * from product where id=?  and is_active=1 and is_admin_verified=1`,[id]
+        `select * from product where id=?  and is_active=1 and is_admin_verified=0`,[id]
     );
     return res[0];
 }
@@ -134,7 +134,7 @@ export const sortProducts=async(sortBy="created_at",order="DESC")=>{
 
 export const updateStock=async(id,quantity)=>{
     const [res]=await db.execute(
-        `update product set stock_quantity=stock_quantity-? where id=? and stock_quantity>=?`,
+        `update product set stock_quantity=stock_quantity-? where id=? and stock_quantity>=? and is_admin_verified`,
         [quantity ,id,quantity]
     );
     return res;

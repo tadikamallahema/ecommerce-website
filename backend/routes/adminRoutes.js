@@ -1,5 +1,5 @@
 import express from 'express';
-import { AdminDeleteCategory, AdminDeleteProduct, changeCategoryStatus, changeProductStatus, createCategoryA, getAllProductsBA, getPendingProductsToApprove, getPendingVendorsToApprove, verifyProduct, verifyVendor } from '../controller/adminController.js';
+import { AdminDeleteCategory, AdminDeleteProduct, allCategories, changeCategoryStatus, changeProductStatus, createCategoryA, getAllProductsBA, getPendingProductsToApprove, getPendingVendorsToApprove, verifyProduct, verifyVendor } from '../controller/adminController.js';
 import { getAllVendors } from '../controller/vendorController.js';
 
 
@@ -16,4 +16,6 @@ adminRoutes.put('/deleteproduct/:productId',AdminDeleteProduct);
 adminRoutes.get('/getAllproducts',getAllProductsBA);
 adminRoutes.put('/updatecatstatus/:categoryId',changeCategoryStatus);
 adminRoutes.put('/updateprodstatus/:productId',changeProductStatus);
+adminRoutes.get('/getallcategories',allCategories);
+
 export default adminRoutes;

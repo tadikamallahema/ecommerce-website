@@ -1,5 +1,5 @@
 import { createProduct, deleteProduct, getProductBySlug, getProductsByVendor, updateStock } from "../models/productModel.js";
-import { getNVerified, getVendors } from "../models/vendorModel.js";
+import {  getVendors } from "../models/vendorModel.js";
 
 
 export const getAllVendors=async(req,res)=>{
@@ -15,14 +15,14 @@ export const getAllVendors=async(req,res)=>{
 // delete product ,create & update product 
 
 export const createProductByVendor=async(req,res)=>{
-  const {name,slug,sku,price, discount_price,stock_quantity,description,main_image,category_id}=req.body;
-  const vendor_id=req.user.id;
+  const {name,slug,sku,price, discount_price,stock_quantity,description,vendor_id,main_image,category_id}=req.body;
+  //const vendor_id=req.user.id;
   if(!name ||!sku ||!price ||!discount_price|| stock_quantity===undefined ||stock_quantity===null || ! description || !slug ||! main_image|| !vendor_id|| !category_id){
     return res.status(400).json({success:false,message:"Few details are missing "});
   }
   try{
     const product=await getProductBySlug(slug);
-    if(product){
+    if(!product){
       return res.status(409).json({success:false,message:"Already Product is existing "})
     }
     await createProduct(name,slug,sku,price, discount_price,stock_quantity,description,main_image,vendor_id,category_id);
@@ -65,15 +65,18 @@ export const updateStockQuantity=async(req,res)=>{
     const {productId}=req.params;
     const {quantity}=req.body;
     if(!productId || quantity<=0|| quantity===undefined){
-        return res.status(400).json({success:false, messaage:"No product is found or quantity is wrong"});
+        return res.status(400).json({success:false, message:"No product is found or quantity is wrong"});
     }
     try{
         const result=await updateStock(productId,quantity);
+        if(!result.is_admin_verified){
+          return res.status(404).json({success:false,message:"Product is not verified by the admin"})
+        }
         if (result.affectedRows === 0) {
         return res.status(404).json({success: false,message: "Insufficient stock or product not found",
       });
     }
-        return res.status(200).json({ success: true, messaage:"Stock updated successfully"});
+        return res.status(200).json({ success: true, message:"Stock updated successfully"});
     }catch (err) {
     return res.status(500).json({ success: false, message: err.message });
   }

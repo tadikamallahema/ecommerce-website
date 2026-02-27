@@ -3,7 +3,7 @@ import React from 'react'
 const ManageCategories = () => {
   return (
     <div>
-      <h4>Manage Categories page</h4>
+      <h3> Update or delete category </h3>
     </div>
   )
 }

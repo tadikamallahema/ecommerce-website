@@ -1,6 +1,6 @@
 
 import express from 'express';
-import { createProductByVendor, deleteProductByVendor, getAllVendors, getNotVeriedVendors, getProductsByVendorV, updateStockQuantity } from '../controller/vendorController.js';
+import { createProductByVendor, deleteProductByVendor, getProductsByVendorV, updateStockQuantity } from '../controller/vendorController.js';
 //import { getNVerified } from '../models/vendorModel.js';
 
 const vendorRoutes=express.Router();

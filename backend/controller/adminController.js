@@ -1,4 +1,4 @@
-import { getCategoryBySlug ,createCategory, getCategoryById, deleteCategory, toggleCategoryStatus} from "../models/categoryModel.js";
+import { getCategoryBySlug ,createCategory, getCategoryById, deleteCategory, toggleCategoryStatus, getAllCategories} from "../models/categoryModel.js";
 import { approveProduct, createProduct, deleteProduct, getAllProducts, getProductById, getProductBySlug, pendingProducts, rejectProduct, toggleProductStatus } from "../models/productModel.js";
 import { getVById,approveVendor,rejectVendor, getPendingVendors } from "../models/vendorModel.js";
 
@@ -34,6 +34,7 @@ export const getPendingVendorsToApprove=async(req,res)=>{
     if(!vendors|| vendors.length===0){
       return res.status(404).json({success:false,message:"No vendors are pending to approve"})
     }
+    
       return res.status(200).json({success:true,vendors})
   
   }catch(err){
@@ -60,6 +61,7 @@ export const createCategoryA=async(req,res)=>{
     return res.status(200).json({success:true,message:"Created category successfully"})
   }catch(err){
     return res.status(500).json({success:false,message:err.message});
+    console.log(err);
   }
 }
 export const AdminDeleteCategory=async(req,res)=>{
@@ -69,10 +71,13 @@ export const AdminDeleteCategory=async(req,res)=>{
     if(!category){
       return res.status(400).json({success:false,message:"No Category is found "});
     }
+    console.log(categoryId);
     await deleteCategory(categoryId);
+    console.log(categoryId);
     return res.status(200).json({success:true,message: "Category deleted successfully" });
   }catch(err){
     return res.status(500).json({success:false,message:err.message});
+    console.log(err);
   }
 }
 /*
@@ -93,6 +98,17 @@ export const createProductA=async(req,res)=>{
   }
 }
   */
+export const allCategories=async(req,res)=>{
+  try{
+    const categories=await getAllCategories();
+    if(!categories){
+      return res.status(400).json({success:false,message:"No Category is found "});
+    }
+    return res.status(200).json({success:true,categories});
+  }catch(err){
+    return res.status(500).json({success:false, message:err.message});
+  }
+}
 export const verifyProduct=async(req,res)=>{
     const {productId}=req.params;
     const {approve}=req.body;
