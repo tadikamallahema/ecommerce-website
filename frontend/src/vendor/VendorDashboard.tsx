@@ -8,11 +8,11 @@ const VendorDashboard = () => {
       <nav>
         <li><Link to="/vendor/register">Vendor Registration</Link></li>
         <li><Link to="/vendor/login">Vendor Login </Link></li>
-        <li><Link to="/vendor/products">Products </Link></li>
-        <li><Link to="/"></Link></li>
+        <li><Link to="/vendor/products">Products</Link></li>
+        <li><Link to="/vendor/createproduct">Create Product</Link></li>
       </nav>
     </div>
   )
 }
 
-export default VendorDashboard
+export default VendorDashboard;

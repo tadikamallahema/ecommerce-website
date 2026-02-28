@@ -10,6 +10,7 @@ import vendorRoutes from './routes/vendorRoutes.js';
 import cookieParser from 'cookie-parser';
 import createCategoryTable from './models/categoryModel.js';
 import createProductTable from './models/productModel.js';
+import imageUpload from './routes/imageUpload.js';
 
 dotenv.config();
 
@@ -29,6 +30,7 @@ await createAdminTable();
 await createCategoryTable();
 await createProductTable();
 app.use('/api',authRoutes);
+app.use('/api/img',imageUpload);
 app.use('/api/admin',adminRoutes);
 app.use('/api/vendor',vendorRoutes);
 
