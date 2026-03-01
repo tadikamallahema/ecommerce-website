@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
 
 interface User{
     name:string;
@@ -38,6 +39,7 @@ const SignUp = () => {
     }
   return (
     <div>
+        <Navbar/>
       <h3> SignUp page</h3>
       <form onSubmit={handleSubmit}>
         <div>

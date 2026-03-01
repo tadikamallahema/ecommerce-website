@@ -18,6 +18,7 @@ import Cart from "./user/Cart.tsx";
 import VendorDashboard from "./vendor/VendorDashboard.tsx";
 import VendorProduct from "./vendor/VendorProduct.tsx";
 
+
 function App() {
   
   return (
@@ -25,10 +26,9 @@ function App() {
       <Routes>
         {/* ---------- PUBLIC ---------- */}
         <Route path="/" element={<Home />} />
-
         {/* USER AUTH */}
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/register" element={<SignUp />} />
 
         {/* VENDOR AUTH */}
         <Route path="/vendor/login" element={<LoginV />} />

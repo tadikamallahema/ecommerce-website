@@ -1,0 +1,13 @@
+
+ul{
+    height: fit-content;
+    width: fit-content;
+    background-color: aquamarine;
+    display: flex;
+}
+li{
+     margin-left: 50px;
+}
+input{
+    margin-left: 50px;
+}
