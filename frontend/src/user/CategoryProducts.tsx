@@ -63,6 +63,7 @@ const CategoryProducts = () => {
             <button onClick={()=>addToCart(p.id,p.price)} > Add to cart</button>
           </div>
         ))}
+        
       </div>
     </div>
   );

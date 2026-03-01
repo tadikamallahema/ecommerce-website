@@ -78,43 +78,30 @@ export const clearUserCart = async (req, res) => {
     return res.status(200).json({ message: 'Cart cleared' });
 };
 
-/*
-export const updateCartQuantity = async (req, res) => {
+
+export const checkout = async (req, res) => {
   try {
     const userId = req.user.id;
-    const { productId, action } = req.body;
 
     const cart = await getCartByUser(userId);
     if (!cart) {
-      return res.status(404).json({ message: "Cart not found" });
+      return res.json({ items: [], total: 0 });
     }
 
     const items = await getCartItems(cart.id);
-    const item = items.find(i => i.product_id === productId);
 
-    if (!item) {
-      return res.status(404).json({ message: "Item not found in cart" });
+    let total = 0;
+    for (const item of items) {
+      total += item.price_at_time * item.quantity;
     }
 
-    let newQuantity = item.quantity;
-
-    if (action === "increase") {
-      newQuantity += 1;
-    } else if (action === "decrease") {
-      newQuantity -= 1;
-    } else {
-      return res.status(400).json({ message: "Invalid action" });
-    }
-
-    if (newQuantity <= 0) {
-      await removeCartItems(cart.id, productId);
-    } else {
-      await updateQuantity(cart.id, productId, newQuantity);
-    }
-
-    return res.json({ success: true, message: "Cart updated" });
+    return res.json({
+      success: true,
+      items,
+      total
+    });
 
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
-};*/
+};

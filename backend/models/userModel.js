@@ -42,6 +42,12 @@ export const getUserByEmail=async(email)=>{
     );
     return row[0];
 }
+export const getUserById=async(Id)=>{
+    const [row]=await db.execute(
+        `select name,phone_number,email,is_active from users where id=?`,[Id]
+    );
+    return row[0];
+}
 export const isEmailExist=async(email)=>{
     const [row]=await db.execute(
         `select id from users where email=?`,[email]

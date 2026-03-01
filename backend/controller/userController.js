@@ -2,7 +2,20 @@
 // , sort ,getProductsByCategory
 
 import { filterProduct, getAllProducts, getProductById, getProductsByCategory, sortProducts } from "../models/productModel.js";
+import { getUserById } from "../models/userModel.js";
 
+export const getUserByUserId=async(req,res)=>{
+  const userId=req.user.id;
+  try{
+    const user=await getUserById(userId);
+    if(!user){
+      return res.status(400).json({success:false,message:"No user found"})
+    }
+    return res.status(200).json({success:true,message:"user details are",user})
+  }catch(err){
+    return res.status(500).json({success:false,message:err.message});
+  }
+}
 export const getAllProductsVe=async(req,res)=>{
   try{
     const products= await getAllProducts();

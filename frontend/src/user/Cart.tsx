@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface CartItem {
   product_id: number;
@@ -12,6 +13,7 @@ interface CartItem {
 const Cart = () => {
   const [items, setItems] = useState<CartItem[]>([]);
 
+  const navigate=useNavigate();
   const fetchCart = async () => {
     const res = await axios.get(
       "http://localhost:2007/api/cart/getcart",
@@ -70,6 +72,7 @@ const Cart = () => {
 
       <hr />
       <h3>Total: ₹{total.toFixed(2)}</h3>
+      <button onClick={()=>navigate('/user/checkout')}>Proceed To Pay</button>
     </div>
   );
 };

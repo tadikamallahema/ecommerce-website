@@ -19,6 +19,8 @@ import VendorDashboard from "./vendor/VendorDashboard.tsx";
 import VendorProduct from "./vendor/VendorProduct.tsx";
 import ViewCategories from "./user/ViewCategories.tsx";
 import CategoryProducts from "./user/CategoryProducts.tsx";
+import CheckOutPage from "./user/CheckOutPage.tsx";
+import Profile from "./user/Profile.tsx";
 
 
 function App() {
@@ -26,7 +28,7 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/viewAllcat" element={<ViewCategories/>}/>
+        <Route path="/user/categories" element={<ViewCategories/>}/>
         <Route path="/category/:id" element={<CategoryProducts />} />
         {/* ---------- PUBLIC ---------- */}
         <Route path="/" element={<Home />} />
@@ -55,6 +57,22 @@ function App() {
           element={
             <ProtectedRoutes allowedRoles={["user"]}>
               <Cart />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="/user/checkout"
+          element={
+            <ProtectedRoutes allowedRoles={["user"]}>
+              <CheckOutPage />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="/user/profile"
+          element={
+            <ProtectedRoutes allowedRoles={["user"]}>
+              <Profile />
             </ProtectedRoutes>
           }
         />
