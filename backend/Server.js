@@ -12,6 +12,9 @@ import createCategoryTable from './models/categoryModel.js';
 import createProductTable from './models/productModel.js';
 import imageUpload from './routes/imageUpload.js';
 import userRouter from './routes/userRoutes.js';
+import createCartTable from './models/cartModel.js';
+import createCartItemTable from './models/cartItemsModel.js';
+import cartRoutes from './routes/cartRoutes.js';
 
 dotenv.config();
 
@@ -30,11 +33,14 @@ await createVendorTable();
 await createAdminTable();
 await createCategoryTable();
 await createProductTable();
+await createCartTable();
+await createCartItemTable();
 app.use('/api',authRoutes);
 app.use('/api/img',imageUpload);
 app.use('/api/admin',adminRoutes);
 app.use('/api/vendor',vendorRoutes);
 app.use('/api/user',userRouter);
+app.use('/api/cart',cartRoutes);
 app.listen(port ,()=>{
     console.log(`Server is runnin on ${port}`);
 })

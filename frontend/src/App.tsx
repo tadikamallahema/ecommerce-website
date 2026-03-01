@@ -51,7 +51,7 @@ function App() {
           }
         />
         <Route
-          path="/cart"
+          path="/user/cart"
           element={
             <ProtectedRoutes allowedRoles={["user"]}>
               <Cart />
