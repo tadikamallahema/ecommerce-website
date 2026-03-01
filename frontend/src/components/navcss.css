@@ -1,8 +1,9 @@
 
 ul{
+    text-align: center;
     height: fit-content;
     width: fit-content;
-    background-color: aquamarine;
+    /*background-color: aquamarine;*/
     display: flex;
 }
 li{

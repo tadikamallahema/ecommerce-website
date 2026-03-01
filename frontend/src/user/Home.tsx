@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import ViewCategories from "./ViewCategories";
 
 const images = [
   "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=1600&q=80",
@@ -37,6 +38,7 @@ const Home = () => {
           </div>
         ))}
       </Slider>
+      <ViewCategories/>
     </div>
   );
 };

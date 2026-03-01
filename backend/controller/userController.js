@@ -59,8 +59,8 @@ export const getAllProductsByCategory=async(req,res)=>{
     return res.status(400).json({success:false,message:"No product is found "});
   }
   try{
-    const product=await getProductsByCategory(categoryId);
-    return res.status(200).json({success:true,message:`List of products of category ${categoryId}`,product})
+    const products=await getProductsByCategory(categoryId);
+    return res.status(200).json({success:true,message:`List of products of category ${categoryId}`,count:products.length,"products":products})
   }catch (err) {
     return res.status(500).json({ success: false, message: err.message });
   }

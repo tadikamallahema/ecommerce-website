@@ -17,6 +17,8 @@ import UserDashboard from "./user/UserDashboard.tsx";
 import Cart from "./user/Cart.tsx";
 import VendorDashboard from "./vendor/VendorDashboard.tsx";
 import VendorProduct from "./vendor/VendorProduct.tsx";
+import ViewCategories from "./user/ViewCategories.tsx";
+import CategoryProducts from "./user/CategoryProducts.tsx";
 
 
 function App() {
@@ -24,6 +26,8 @@ function App() {
   return (
     <>
       <Routes>
+        <Route path="/viewAllcat" element={<ViewCategories/>}/>
+        <Route path="/category/:id" element={<CategoryProducts />} />
         {/* ---------- PUBLIC ---------- */}
         <Route path="/" element={<Home />} />
         {/* USER AUTH */}
