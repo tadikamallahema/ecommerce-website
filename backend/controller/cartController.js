@@ -1,4 +1,4 @@
-import { addItemToCart, getCartItems, removeCartItems } from "../models/cartItemsModel.js";
+import { addItemToCart, getCartItems, removeCartItems, updateQuantity } from "../models/cartItemsModel.js";
 import { createCartforUser, getCartByUser } from "../models/cartModel.js";
 
 
@@ -25,21 +25,36 @@ export const addToCart=async(req,res)=>{
     return res.status(200).json({success:true,message:"Items added to cart"});
 }
 
-export const updateCart=async(req,res)=>{
-    const userId=req.user.id;
-    const {productId,quantity}=req.body;
+export const updateCart = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { productId, action } = req.body;
 
-    const cart=await getCartByUser(userId);
-    if (!cart) return res.status(404).json({ message: 'Cart not found' });
+    const cart = await getCartByUser(userId);
+    if (!cart) return res.status(404).json({ message: "Cart not found" });
 
-    if (quantity <= 0) {
-        await removeCartItems(cart.id, productId);
+    const items = await getCartItems(cart.id);
+    const item = items.find(i => i.product_id === productId);
+
+    if (!item) return res.status(404).json({ message: "Item not found" });
+
+    let newQty =
+      action === "increase"
+        ? item.quantity + 1
+        : item.quantity - 1;
+
+    if (newQty <= 0) {
+      await removeCartItem(cart.id, productId);
     } else {
-        await updateQuantity(cart.id, productId, quantity);
+      await updateQuantity(cart.id, productId, newQty);
     }
 
-    return res.status(200).json({ message: 'Cart updated' });
-}
+    res.json({ success: true });
+
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
 
 export const removeCartItem = async (req, res) => {
     const userId = req.user.id;
@@ -62,3 +77,44 @@ export const clearUserCart = async (req, res) => {
 
     return res.status(200).json({ message: 'Cart cleared' });
 };
+
+/*
+export const updateCartQuantity = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { productId, action } = req.body;
+
+    const cart = await getCartByUser(userId);
+    if (!cart) {
+      return res.status(404).json({ message: "Cart not found" });
+    }
+
+    const items = await getCartItems(cart.id);
+    const item = items.find(i => i.product_id === productId);
+
+    if (!item) {
+      return res.status(404).json({ message: "Item not found in cart" });
+    }
+
+    let newQuantity = item.quantity;
+
+    if (action === "increase") {
+      newQuantity += 1;
+    } else if (action === "decrease") {
+      newQuantity -= 1;
+    } else {
+      return res.status(400).json({ message: "Invalid action" });
+    }
+
+    if (newQuantity <= 0) {
+      await removeCartItems(cart.id, productId);
+    } else {
+      await updateQuantity(cart.id, productId, newQuantity);
+    }
+
+    return res.json({ success: true, message: "Cart updated" });
+
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+};*/

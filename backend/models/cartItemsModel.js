@@ -43,13 +43,15 @@ export const getCartItems=async(cart_id)=>{
     return rows;
 }
 
-export const updateQuantity=async(cart_id,product_id,quantity)=>{
-    await db.execute(
-        `update cart_items set quantity=? where cart_id=? and product_id=? and quantity>0`
-        ,[quantity,cart_id,product_id]
-    );
+export const updateQuantity = async (cartId, productId, quantity) => {
+  await db.execute(
+    `UPDATE cart_items 
+     SET quantity = ? 
+     WHERE cart_id = ? AND product_id = ?`,
+    [quantity, cartId, productId]
+  );
 };
-
+  
 export const removeCartItems=async(cart_id,product_id)=>{
     await db.execute(
         `delete from cart_items
