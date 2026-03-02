@@ -73,7 +73,7 @@ export const clearUserCart = async (req, res) => {
     const cart = await getCartByUser(userId);
     if (!cart) return res.json({ message: 'Cart already empty' });
 
-    await clearCartItems(cart.id);
+    await removeCartItems(cart.id);
 
     return res.status(200).json({ message: 'Cart cleared' });
 };

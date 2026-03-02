@@ -52,10 +52,16 @@ export const updateQuantity = async (cartId, productId, quantity) => {
   );
 };
   
-export const removeCartItems=async(cart_id,product_id)=>{
+/* export const removeCartItems=async(cart_id,product_id)=>{
     await db.execute(
         `delete from cart_items
         where cart_id=? and product_id=?`,[cart_id,product_id]
+    );
+}; */
+export const removeCartItems=async(cart_id)=>{
+    await db.execute(
+        `delete from cart_items
+        where cart_id=? `,[cart_id]
     );
 };
 export const clearCart = async (cartId) => {
