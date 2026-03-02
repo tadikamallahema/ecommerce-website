@@ -15,15 +15,15 @@ export const createOrderTable=()=>{
     console.log("Orders Table is created");
 }
 
-export const createOrder=async(userId ,total,status)=>{
+export const createOrder=async(userId ,total,status="paid")=>{
     const [res]=await db.execute(
-        `insert into orders(user_id,total_amount,status) values(?,?,?)`,[userId,total,"paid"]
+        `insert into orders(user_id,total_amount,status) values(?,?,?)`,[userId,total,status]
     );
     return res.insertId;
 }
 
 export const getUserOrders=async(userId)=>{
-    const [rows]=db.execute(
+    const [rows]=await db.execute(
         `select * from orders where user_id=? order by created_at desc`,[userId]
     );
     return rows;

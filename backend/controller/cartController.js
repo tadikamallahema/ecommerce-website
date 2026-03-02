@@ -1,4 +1,4 @@
-import { addItemToCart, getCartItems, removeCartItems, updateQuantity } from "../models/cartItemsModel.js";
+import { addItemToCart, getCartItems, removeCartItems,removeSingleCartItem, updateQuantity } from "../models/cartItemsModel.js";
 import { createCartforUser, getCartByUser } from "../models/cartModel.js";
 
 
@@ -12,7 +12,7 @@ export const getCart=async(req,res)=>{
     const items=await getCartItems(cart.id);
     return res.status(200).json({success:true, message:"Item added to cart",items});
 }
-
+/*
 export const addToCart=async(req,res)=>{
     const userId=req.user.id;
     const {productId,quantity,price}=req.body;
@@ -24,6 +24,38 @@ export const addToCart=async(req,res)=>{
     await addItemToCart(cart.id,productId,quantity,price);
     return res.status(200).json({success:true,message:"Items added to cart"});
 }
+    */
+   export const addToCart = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const { productId, quantity } = req.body; // ← price removed from body
+
+        if (!productId || !quantity || quantity <= 0) {
+            return res.status(400).json({ success: false, message: "Invalid product or quantity" });
+        }
+
+        // Always fetch real price from DB — never trust client
+        const product = await getProductById(productId);
+        if (!product) {
+            return res.status(404).json({ success: false, message: "Product not found or unavailable" });
+        }
+
+        // Use discount_price if available, otherwise regular price
+        const price = product.discount_price ?? product.price;
+
+        let cart = await getCartByUser(userId);
+        if (!cart) {
+            await createCartforUser(userId);
+            cart = await getCartByUser(userId);
+        }
+
+        await addItemToCart(cart.id, productId, quantity, price);
+        return res.status(200).json({ success: true, message: "Item added to cart" });
+
+    } catch (err) {
+        return res.status(500).json({ success: false, message: err.message });
+    }
+};
 
 export const updateCart = async (req, res) => {
   try {
@@ -44,7 +76,7 @@ export const updateCart = async (req, res) => {
         : item.quantity - 1;
 
     if (newQty <= 0) {
-      await removeCartItem(cart.id, productId);
+      await removeSingleCartItem(cart.id, productId);
     } else {
       await updateQuantity(cart.id, productId, newQty);
     }
@@ -58,15 +90,16 @@ export const updateCart = async (req, res) => {
 
 export const removeCartItem = async (req, res) => {
     const userId = req.user.id;
-    const { productId } = req.params;
+    const productId = parseInt(req.params.productId);
 
     const cart = await getCartByUser(userId);
     if (!cart) return res.status(404).json({ message: 'Cart not found' });
 
-    await removeCartItems(cart.id, productId);
+    await removeSingleCartItem(cart.id, productId);
 
     return res.status(200).json({ message: 'Item removed from cart' });
 };
+
 export const clearUserCart = async (req, res) => {
     const userId = req.user.id;
 

@@ -1,4 +1,4 @@
-import { createProduct, deleteProduct, getProductBySlug, getProductsByVendor, updateStock } from "../models/productModel.js";
+import { createProduct, deleteProduct, getProductByIdAcc, getProductBySlug, getProductsByVendor, updateStock } from "../models/productModel.js";
 import {  getVendors } from "../models/vendorModel.js";
 
 
@@ -15,17 +15,17 @@ export const getAllVendors=async(req,res)=>{
 // delete product ,create & update product 
 
 export const createProductByVendor=async(req,res)=>{
-  const {name,slug,sku,price, discount_price,stock_quantity,description,vendor_id,main_image,category_id}=req.body;
-  //const vendor_id=req.user.id;
+  const {name,slug,sku,price, discount_price,stock_quantity,description,main_image,category_id}=req.body;
+  const vendorId=req.user.id;
   if(!name ||!sku ||!price ||!discount_price|| stock_quantity===undefined ||stock_quantity===null || ! description || !slug ||! main_image|| !vendor_id|| !category_id){
     return res.status(400).json({success:false,message:"Few details are missing "});
   }
   try{
-    const product=await getProductBySlug(slug);
-    if(!product){
-      return res.status(409).json({success:false,message:"Already Product is existing "})
-    }
-    await createProduct(name,slug,sku,price, discount_price,stock_quantity,description,main_image,vendor_id,category_id);
+    const existingProduct = await getProductBySlug(slug);
+if (existingProduct && existingProduct.length > 0) {   // ← if found → conflict
+    return res.status(409).json({ success: false, message: "A product with this slug already exists" });
+}
+await createProduct(name, slug, sku, price, discount_price, stock_quantity, description, main_image, vendor_id, category_id);
     return res.status(200).json({success:true,message:"Created Product successfully"})
   }catch(err){
     return res.status(500).json({success:false,message:err.message});
@@ -35,7 +35,7 @@ export const deleteProductByVendor=async(req,res)=>{
   const {productId}=req.params;
   const vendorId=req.user.id; // from JWT 
   try{
-    const product=await getProductById(productId);
+    const product=await getProductByIdAcc(productId);
     if(!product || product.vendorId!==vendorId){
       return res.status(403).json({success:false,message:"Not allowed or  product not found "});
     }

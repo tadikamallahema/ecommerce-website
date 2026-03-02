@@ -19,7 +19,7 @@ export const addOrderItem = async (orderId, item) => {
     await db.execute(
         `INSERT INTO order_items(order_id, product_id, quantity, price)
          VALUES (?, ?, ?, ?)`,
-        [orderId, item.product_id, item.quantity, item.price] // <- change here
+        [orderId, item.product_id, item.quantity, item.price_at_time] // <- change here
     );
 };
 export const getOrderItems=async(orderId)=>{

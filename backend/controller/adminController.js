@@ -1,5 +1,5 @@
 import { getCategoryBySlug ,createCategory, getCategoryById, deleteCategory, toggleCategoryStatus, getAllCategories} from "../models/categoryModel.js";
-import { approveProduct, createProduct, deleteProduct, getAllProducts, getProductById, getProductBySlug, pendingProducts, rejectProduct, toggleProductStatus } from "../models/productModel.js";
+import { approveProduct, createProduct, deleteProduct, getAllProducts, getProductByIdAcc, getProductByIdPen, getProductBySlug, pendingProducts, rejectProduct, toggleProductStatus } from "../models/productModel.js";
 import { getVById,approveVendor,rejectVendor, getPendingVendors } from "../models/vendorModel.js";
 
 export const verifyVendor=async(req,res)=>{
@@ -115,7 +115,7 @@ export const verifyProduct=async(req,res)=>{
     if(approve===undefined){
       return res.status(400).json({ message: "Approval decision required" });
     }
-    const product =await getProductById(productId);
+    const product =await getProductByIdPen(productId);
     if(!product){
       return res.status(404).json({ message: "Product not found" });
     }
@@ -160,7 +160,7 @@ export const getAllProductsBA=async(req,res)=>{
 export const AdminDeleteProduct=async(req,res)=>{
   const {productId}=req.params;
   try{
-    const product=await getProductById(productId);
+    const product=await getProductByIdAcc(productId);
     if(!product){
       return res.status(400).json({success:false,message:"No product is found "});
     }

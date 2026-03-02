@@ -1,7 +1,7 @@
 //usercontroller -get allproducts ,  get products by id 
 // , sort ,getProductsByCategory
 
-import { filterProduct, getAllProducts, getProductById, getProductsByCategory, sortProducts } from "../models/productModel.js";
+import { filterProduct, getAllProducts, getProductByIdAcc, getProductsByCategory, sortProducts } from "../models/productModel.js";
 import { getUserById } from "../models/userModel.js";
 
 export const getUserByUserId=async(req,res)=>{
@@ -34,7 +34,7 @@ export const VenGetProdById=async(req,res)=>{
         return res.status(400).json({success:false,message:"Invalid productId"})
     }
     try{
-        const product=await getProductById(productId);
+        const product=await getProductByIdAcc(productId);
         return res.status(200).json({success:true,product}); 
 
     }catch (err) {

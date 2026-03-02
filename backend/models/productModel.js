@@ -58,9 +58,15 @@ export const getAllProducts=async()=>{
     );
     return res;
 }
-export const getProductById=async(id)=>{
+export const getProductByIdPen=async(id)=>{
     const [res]=await db.execute(
         `select * from product where id=?  and is_active=1 and is_admin_verified=0`,[id]
+    );
+    return res[0];
+}
+export const getProductByIdAcc=async(id)=>{
+    const [res]=await db.execute(
+        `select * from product where id=?  and is_active=1 and is_admin_verified=1`,[id]
     );
     return res[0];
 }
