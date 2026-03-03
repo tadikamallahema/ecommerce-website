@@ -136,7 +136,7 @@ const CheckOutPage = () => {
 
   if (loading) return <p>Loading checkout...</p>;
   if (error) return <p>{error}</p>;
-
+/* 
   return (
     <div style={{ padding: "20px" }}>
       <h2>Checkout</h2>
@@ -165,7 +165,156 @@ const CheckOutPage = () => {
         Pay ₹{total}
       </button>
     </div>
-  );
+  ); */
+  return (
+  <div
+    style={{
+      padding: "40px",
+      background: "#f5f5f5",
+     /*  minHeight: "calc(100vh - 80px)", */
+    }}
+  >
+    <h2 style={{ marginBottom: "30px" }}>🧾 Checkout</h2>
+
+    {items.length === 0 ? (
+      <div
+        style={{
+          background: "#fff",
+          padding: "30px",
+          borderRadius: "12px",
+          boxShadow: "0 5px 15px rgba(0,0,0,0.05)",
+        }}
+      >
+        <p>Your cart is empty.</p>
+      </div>
+    ) : (
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "2fr 1fr",
+          gap: "30px",
+          alignItems: "start",
+        }}
+      >
+        {/* LEFT SIDE - ITEMS */}
+        <div
+          style={{
+            background: "#fff",
+            padding: "25px",
+            borderRadius: "12px",
+            boxShadow: "0 5px 20px rgba(0,0,0,0.05)",
+          }}
+        >
+          <h3 style={{ marginBottom: "20px" }}>Order Items</h3>
+
+          {items.map((item) => (
+            <div
+              key={item.product_id}
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                padding: "15px 0",
+                borderBottom: "1px solid #eee",
+              }}
+            >
+              <div>
+                <p style={{ margin: 0, fontWeight: "500" }}>
+                  {item.name}
+                </p>
+                <small style={{ color: "#777" }}>
+                  Qty: {item.quantity}
+                </small>
+              </div>
+
+              <p style={{ fontWeight: "bold", margin: 0 }}>
+                ₹{item.price_at_time * item.quantity}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* RIGHT SIDE - SUMMARY */}
+        <div
+          style={{
+            background: "#fff",
+            padding: "25px",
+            borderRadius: "12px",
+            boxShadow: "0 5px 20px rgba(0,0,0,0.08)",
+            height: "fit-content",
+          }}
+        >
+          <h3>Payment Summary</h3>
+          <hr />
+
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginTop: "20px",
+            }}
+          >
+            <span>Items Total</span>
+            <span>₹{total}</span>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginTop: "10px",
+            }}
+          >
+            <span>Delivery</span>
+            <span style={{ color: "green" }}>Free</span>
+          </div>
+
+          <hr style={{ margin: "20px 0" }} />
+
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              fontSize: "18px",
+              fontWeight: "bold",
+            }}
+          >
+            <span>Total Payable</span>
+            <span>₹{total}</span>
+          </div>
+
+          <button
+            onClick={handlePay}
+            disabled={total <= 0}
+            style={{
+              marginTop: "25px",
+              width: "100%",
+              padding: "14px",
+              borderRadius: "8px",
+              border: "none",
+              background:
+                total <= 0
+                  ? "#ccc"
+                  : "linear-gradient(135deg,#ff6a5e,#ff3d3d)",
+              color: "#fff",
+              fontWeight: "bold",
+              cursor: total <= 0 ? "not-allowed" : "pointer",
+              transition: "0.3s",
+            }}
+            onMouseOver={(e) => {
+              if (total > 0)
+                e.currentTarget.style.transform = "scale(1.05)";
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.transform = "scale(1)";
+            }}
+          >
+            Pay ₹{total}
+          </button>
+        </div>
+      </div>
+    )}
+  </div>
+);
 };
 
 export default CheckOutPage;

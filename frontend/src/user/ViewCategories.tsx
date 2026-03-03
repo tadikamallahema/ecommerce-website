@@ -1,4 +1,4 @@
-import axios from 'axios';
+/* import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import UserDashboard from './UserDashboard';
@@ -81,3 +81,74 @@ const ViewCategories = () => {
 }
 
 export default ViewCategories
+ */
+
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import UserDashboard from "./UserDashboard";
+import "./auth.css";
+
+interface Category {
+  id: number;
+  name: string;
+  description?: string;
+  slug?: string;
+  image_url?: string;
+}
+
+const ViewCategories = () => {
+  const [categories, setCategories] = useState<Category[]>([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const result = await axios.get(
+          "http://localhost:2007/api/admin/getallcategories",
+          { withCredentials: true }
+        );
+        setCategories(result.data.categories);
+      } catch (err: any) {
+        alert(err.message);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  return (
+    <div className="category-page">
+      <UserDashboard />
+      <h2 className="category-title">Shop by Category</h2>
+
+      <div className="category-grid">
+        {categories.map((cat) => (
+          <div
+            key={cat.id}
+            className="category-card"
+            onClick={() => navigate(`/category/${cat.id}`)}
+          >
+            <div
+              className="category-image"
+              style={{
+                backgroundImage: `url(${
+                  cat.image_url ||
+                  "https://via.placeholder.com/400x300?text=No+Image"
+                })`,
+              }}
+            >
+              <div className="overlay">
+                {cat.name}
+              </div>
+            </div>
+
+            <h3>"{cat.description || "Explore Now"}"</h3>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default ViewCategories;
