@@ -1,5 +1,4 @@
-/* id, name, email, phoneNumber, password_hash, business_name, 
-business_type, is_active, is_verified, created_at, updated_at */
+
 import db from '../config/db.js';
 
 export const createVendorTable=()=>{

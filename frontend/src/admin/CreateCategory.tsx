@@ -104,7 +104,6 @@ const CreateCategory = () => {
 
       alert("Category created successfully");
 
-      // Reset form
       setCategory({
         name: "",
         description: "",
@@ -129,127 +128,66 @@ const CreateCategory = () => {
 
       <form onSubmit={handleSubmit}>
 
-        {/* NAME */}
         <div>
           <label>Name *</label>
-          <input
-            type="text"
-            name="name"
-            value={category.name}
-            onChange={handleChange}
-            required
-          />
+          <input type="text"  name="name"  value={category.name}  onChange={handleChange}  required/>
         </div>
 
-        {/* DESCRIPTION */}
         <div>
           <label>Description</label>
-          <textarea
-            name="description"
-            value={category.description}
-            onChange={handleChange}
-          />
+          <textarea  name="description"  value={category.description}  onChange={handleChange}/>
         </div>
 
-        {/* SLUG */}
         <div>
           <label>Slug</label>
-          <input
-            type="text"
-            name="slug"
-            value={category.slug}
-            onChange={handleChange}
-          />
+          <input  type="text"  name="slug"  value={category.slug}  onChange={handleChange}/>
         </div>
 
-        {/* 🔥 IMAGE UPLOAD SECTION */}
         <div>
           <label>Category Image</label>
-
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) =>
-              setFile(e.target.files?.[0] || null)
-            }
-          />
-
-          <button
-            type="button"
-            onClick={handleImageUpload}
-            disabled={uploading}
-          >
+          <input  type="file"  accept="image/*" onChange={(e) =>  setFile(e.target.files?.[0] || null)}/>
+          <button  type="button"  onClick={handleImageUpload}  disabled={uploading}>
             {uploading ? "Uploading..." : "Upload Image"}
           </button>
 
-          {/* ✅ SHOW URL + PREVIEW */}
           {category.image_url && (
             <div style={{ marginTop: "10px" }}>
 
               <p><strong>Image URL:</strong></p>
-
-              <input
-                type="text"
-                value={category.image_url}
-                readOnly
-                style={{ width: "100%" }}
-              />
+              <input  type="text"  value={category.image_url}  readOnly  style={{ width: "100%" }}/>
 
               <button
                 type="button"
                 onClick={() =>
                   navigator.clipboard.writeText(category.image_url!)
                 }
-                style={{ marginTop: "5px" }}
-              >
+                style={{ marginTop: "5px" }}>
                 Copy URL
               </button>
 
               <div style={{ marginTop: "10px" }}>
-                <img
-                  src={category.image_url}
-                  width="150"
-                  alt="Preview"
-                />
+                <img src={category.image_url}  width="150" alt="Preview"/>
               </div>
-
             </div>
           )}
         </div>
 
-        {/* PARENT ID */}
         <div>
           <label>Parent Category ID</label>
-          <input
-            type="number"
-            name="parent_id"
-            value={category.parent_id ?? ""}
-            onChange={handleChange}
-          />
+          <input  type="number"  name="parent_id"  value={category.parent_id ?? ""}  onChange={handleChange}/>
         </div>
 
-        {/* STATUS */}
         <div>
           <label>Status</label>
-          <select
-            name="is_active"
-            value={category.is_active}
-            onChange={handleChange}
-          >
+          <select  name="is_active"  value={category.is_active}  onChange={handleChange}>
             <option value={1}>Active</option>
             <option value={0}>Inactive</option>
           </select>
         </div>
 
-        {/* SORT ORDER */}
         <div>
           <label>Sort Order</label>
-          <input
-            type="number"
-            name="sort_order"
-            value={category.sort_order}
-            onChange={handleChange}
-          />
+          <input  type="number"  name="sort_order"  value={category.sort_order}  onChange={handleChange}/>
         </div>
 
         <button type="submit" style={{ marginTop: "10px" }}>

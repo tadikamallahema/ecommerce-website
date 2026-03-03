@@ -6,8 +6,8 @@ import UserDashboard from "./UserDashboard";
 interface Product {
   id: number;
   name: string;
-  price: number;                 // original price
-  discount_price?: number | null; // discounted price
+  price: number;                 
+  discount_price?: number | null; 
   image_url?: string;
 }
 
@@ -16,7 +16,6 @@ const CategoryProducts = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState<Product[]>([]);
 
-  // ---------- FETCH PRODUCTS ----------
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -34,7 +33,6 @@ const CategoryProducts = () => {
     fetchProducts();
   }, [id]);
 
-  // ---------- FINAL PRICE LOGIC ----------
   const getFinalPrice = (product: Product) => {
     if (
       product.discount_price &&
@@ -46,7 +44,6 @@ const CategoryProducts = () => {
     return product.price;
   };
 
-  // ---------- ADD TO CART ----------
   const addToCart = async (product: Product) => {
     try {
       await axios.post(
@@ -54,7 +51,7 @@ const CategoryProducts = () => {
         {
           productId: product.id,
           quantity: 1,
-          price: getFinalPrice(product), // ✅ discount-aware price
+          price: getFinalPrice(product), 
         },
         { withCredentials: true }
       );
@@ -73,21 +70,11 @@ const CategoryProducts = () => {
       <h2>Products</h2>
 
       <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-          gap: "20px",
-        }}
-      >
+        style={{  display: "grid",gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",  gap: "20px",}}>
         {products.map((p) => (
           <div
             key={p.id}
-            style={{
-              border: "1px solid #ddd",
-              borderRadius: "12px",
-              padding: "12px",
-            }}
-          >
+            style={{border: "1px solid #ddd",borderRadius: "12px",  padding: "12px",}}>
             <img
               src={p.image_url}
               alt={p.name}
@@ -95,22 +82,17 @@ const CategoryProducts = () => {
                 width: "100%",
                 height: "160px",
                 objectFit: "cover",
-                borderRadius: "8px",
-              }}
-            />
+                borderRadius: "8px",}}/>
 
             <h4>{p.name}</h4>
 
-            {/* ---------- PRICE DISPLAY ---------- */}
             {p.discount_price && p.discount_price < p.price ? (
               <div>
                 <p
                   style={{
                     textDecoration: "line-through",
                     color: "#888",
-                    margin: 0,
-                  }}
-                >
+                    margin: 0,}}>
                   ₹{p.price}
                 </p>
                 <p

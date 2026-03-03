@@ -1,7 +1,6 @@
 import express from 'express';
 import { adminLogin, userLogin, userRegister, vendorLogin, vendorRegistration } from '../controller/authController.js';
 import authMiddleware from '../middleware/authMiddleware.js'
-import { authorize } from '../middleware/authorize.js';
 const authRoutes=express.Router();
 
 authRoutes.post('/register',userRegister);

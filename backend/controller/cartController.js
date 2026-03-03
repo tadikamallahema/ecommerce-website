@@ -29,19 +29,15 @@ export const addToCart=async(req,res)=>{
    export const addToCart = async (req, res) => {
     try {
         const userId = req.user.id;
-        const { productId, quantity } = req.body; // ← price removed from body
+        const { productId, quantity } = req.body; 
 
         if (!productId || !quantity || quantity <= 0) {
             return res.status(400).json({ success: false, message: "Invalid product or quantity" });
         }
-
-        // Always fetch real price from DB — never trust client
         const product = await getProductByIdAcc(productId);
         if (!product) {
             return res.status(404).json({ success: false, message: "Product not found or unavailable" });
         }
-
-        // Use discount_price if available, otherwise regular price
         const price = product.discount_price ?? product.price;
 
         let cart = await getCartByUser(userId);

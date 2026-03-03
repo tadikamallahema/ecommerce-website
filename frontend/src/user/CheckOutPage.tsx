@@ -30,7 +30,6 @@ const CheckOutPage = () => {
 
       const checkoutItems = res.data.items || [];
 
-      // ✅ frontend total calculation (safe)
       const calculatedTotal = checkoutItems.reduce(
         (sum: number, item: CheckoutItem) =>
           sum + item.price_at_time * item.quantity,
@@ -48,7 +47,6 @@ const CheckOutPage = () => {
 
   const handlePay = async () => {
     try {
-    // 1️⃣ Place order
     const res = await axios.post(
       "http://localhost:2007/api/orders/placeorder",
       {},
@@ -57,7 +55,6 @@ const CheckOutPage = () => {
 
     const orderId = res.data.orderId;
 
-    // 2️⃣ Update status (frontend-triggered)
     await axios.put(
       `http://localhost:2007/api/orders/${orderId}/status`,
       { status: "paid" },

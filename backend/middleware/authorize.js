@@ -16,9 +16,4 @@ export const authorize = (...allowedRoles) => {
 /**
  How to useis :
  router.post(
-  "/verifyvendor/:vendorId",
-  authMiddleware,
-  authorize("admin"),
-  verifyVendor
-);
- */
+  "/verifyvendor/:vendorId",authMiddleware,authorize("admin"),verifyVendor);*/

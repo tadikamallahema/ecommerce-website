@@ -42,10 +42,7 @@ export const getPendingVendorsToApprove=async(req,res)=>{
   }
 }
 
-/*
-usercontroller -get allproducts , get products by id , filter , sort ,getProductsByCategory
-vendor - see all productsby vendor , update stock quantity , delete product ,create & update product 
-*/
+
 
 export const createCategoryA=async(req,res)=>{
   const {name,description,slug,image_url}=req.body;

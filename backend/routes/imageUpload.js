@@ -21,15 +21,10 @@ imageUpload.post("/upload", upload.single("image"), async (req, res) => {
       stream.end(file.buffer);
     });
 
-    // 🔥 IMPORTANT — return URL
-    res.json({
-      message: "Upload successful",
-      image_url: result.secure_url,
-    });
+    res.json({message: "Upload successful",image_url: result.secure_url,});
 
   } catch (err) {
-    res.status(500).json(err);
-  }
+    res.status(500).json(err);}
 });
 
 export default imageUpload;

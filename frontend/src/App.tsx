@@ -32,20 +32,17 @@ function App() {
       <Routes>
         <Route path="/user/categories" element={<ViewCategories/>}/>
         {/* <Route path="/category/:id" element={<CategoryProducts />} /> */}
-        {/* ---------- PUBLIC ---------- */}
+        
         <Route path="/" element={<Home />} />
-        {/* USER AUTH */}
+       
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<SignUp />} />
 
-        {/* VENDOR AUTH */}
         <Route path="/vendor/login" element={<LoginV />} />
         <Route path="/vendor/register" element={<VRegister />} />
 
-        {/* ADMIN AUTH */}
         <Route path="/admin/login" element={<AdminLogin />} />
 
-        {/* ---------- USER ---------- */}
         <Route
           path="/category/:id"
           element={
@@ -95,7 +92,6 @@ function App() {
           }
         />
 
-        {/* ---------- VENDOR ---------- */}
         <Route
           path="/vendor"
           element={
@@ -121,7 +117,6 @@ function App() {
           }
         />
 
-        {/* ---------- ADMIN ---------- */}
         <Route
           path="/admin"
           element={
@@ -176,30 +171,3 @@ function App() {
 }
 
 export default App;
-/**
- {/*
- <ManageCategories/>
- <CreateCategory/>
- <GetAllProducts/>
- <ApproveProduct/>
- <AdminDashboard/>
- <ApproveProduct/>
- <h1>Hello is my APP.jsx working?</h1> <Navbar/> 
- {/*  <SignUp/> 
-  <Routes>
-        <Route path="/register" element={<SignUp/>}/>
-        <Route path="/login" element={<Login/>}/>
-        {/* <Route path="/home" element={
-          <ProtectedRoutes>
-            <Home/>
-          </ProtectedRoutes>
-        }/> 
-        <Route path="/vendor/login" element={<LoginV/>}/>
-        <Route path="/vendor/register" element={<VRegister/>}/>
-        <Route path="/admin/login" element={<AdminLogin/>}/>
-        <Route path="/adminv/verify" element={<ApproveVendor/>}/>
-        <Route path="/admin/verifyprod" element={<ApproveProduct/>}/>
-        <Route path="/admin/manageCategories" element={<ManageCategories/>}/>
-        <Route path="/admin/getAllProducts" element={<GetAllProducts/>}/>
-      </Routes>
- */

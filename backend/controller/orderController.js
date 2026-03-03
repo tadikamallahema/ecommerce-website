@@ -29,41 +29,34 @@ export const placeOrder = async (req, res) => {
   try {
     const userId = req.user.id;
 
-    // 1. Get cart
     const cart = await getCartByUser(userId);
     if (!cart) return res.status(400).json({ message: "Cart not found" });
 
-    // 2. Get cart items
     const items = await getCartItems(cart.id);
     if (items.length === 0) return res.status(400).json({ message: "Cart is empty" });
 
-    // 3. Safe total — parseFloat guards against undefined/null from DB
     const totalAmount = items.reduce((sum, item) => {
-      const price = parseFloat(item.price_at_time) || 0;  // ← was item.price (undefined)
+      const price = parseFloat(item.price_at_time) || 0;  
       const qty = parseInt(item.quantity) || 0;
       return sum + price * qty;
     }, 0);
 
-    // 4. Catch NaN before it hits DB (NaN → MySQL2 driver throws "undefined" error)
     if (!totalAmount || isNaN(totalAmount)) {
       return res.status(400).json({ message: "Invalid cart prices. Please remove and re-add items." });
     }
 
-    // 5. Create order — "pending" lowercase to match ENUM('pending','paid','cancelled')
     const [orderResult] = await db.execute(
       `INSERT INTO orders (user_id, total_amount, status) VALUES (?, ?, ?)`,
       [userId, totalAmount, "pending"]   // ← was "PENDING" — not in ENUM
     );
     const orderId = orderResult.insertId;
 
-    // 6. Insert order items — validate each item before hitting DB
     for (const item of items) {
       const price = parseFloat(item.price_at_time);
       const qty = parseInt(item.quantity);
       const productId = item.product_id;
 
       if (!productId || isNaN(price) || isNaN(qty)) {
-        // Rollback order if any item is bad
         await db.execute(`DELETE FROM orders WHERE id = ?`, [orderId]);
         return res.status(400).json({ message: `Bad data for product ${productId}. Order cancelled.` });
       }
@@ -73,12 +66,8 @@ export const placeOrder = async (req, res) => {
         [orderId, productId, qty, price]
       );
     }
-
-    // 7. Clear cart only after everything succeeds
     await removeCartItems(cart.id);
-
     return res.status(201).json({ success: true, message: "Order placed", orderId });
-
   } catch (err) {
     console.error("placeOrder error:", err.message);
     return res.status(500).json({ message: err.message });
@@ -141,24 +130,16 @@ export const updateOrderStatus = async (req, res) => {
 
 export const getUserOrderHistory = async (req, res) => {
   try {
-    const userId = req.user.id; // assuming auth middleware
+    const userId = req.user.id; 
+    const orders = await getUserOrders(userId); 
 
-    const orders = await getUserOrders(userId); // DB call
-
-    // ✅ filter only successful orders
     const successfulOrders = orders.filter(
       (order) => order.status === "paid"
     );
 
-    return res.status(200).json({
-      success: true,
-      orders: successfulOrders,
-    });
+    return res.status(200).json({success: true,orders: successfulOrders,});
   } catch (err) {
     console.error(err);
-    return res.status(500).json({
-      success: false,
-      message: err.message,
-    });
+    return res.status(500).json({success: false,message: err.message,});
   }
 };

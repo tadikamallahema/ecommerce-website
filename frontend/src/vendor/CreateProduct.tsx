@@ -38,7 +38,6 @@ const CreateProduct = () => {
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
 
-  // ---------- FETCH CATEGORIES ----------
   useEffect(() => {
     fetchCategories();
   }, []);
@@ -51,7 +50,6 @@ const CreateProduct = () => {
     setCategories(res.data.categories);
   };
 
-  // ---------- INPUT HANDLER ----------
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
@@ -66,9 +64,11 @@ const CreateProduct = () => {
     }));
   };
 
-  // ---------- IMAGE UPLOAD ----------
   const handleImageUpload = async () => {
-    if (!file) return alert("Select image first");
+    if (!file) {
+      alert("Select image first");
+      return;
+    }
 
     const formData = new FormData();
     formData.append("image", file);
@@ -93,16 +93,17 @@ const CreateProduct = () => {
     }
   };
 
-  // ---------- SUBMIT ----------
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!product.name || !product.slug || !product.price || !product.category_id) {
-      return alert("Fill required fields");
+      alert("Fill required fields");
+      return;
     }
 
     if (!product.main_image) {
-      return alert("Upload image first");
+      alert("Upload image first");
+      return;
     }
 
     try {
@@ -126,107 +127,103 @@ const CreateProduct = () => {
         category_id: 0,
         is_active: 1,
       });
+
       setFile(null);
     } catch (err: any) {
       alert(err.response?.data?.message || "Failed");
     }
   };
 
-return (
-  <div style={{ padding: 20, maxWidth: 700 }}>
-    <VendorDashboard/>
-    <h3>Create Product</h3>
+  return (
+    <div style={{ padding: 20, maxWidth: 700 }}>
+      <VendorDashboard />
+      <h3>Create Product</h3>
 
-    <form onSubmit={handleSubmit}>
-
-      {/* NAME */}
-      <div>
-        <label >Product Name *</label>
-        <input
-          name="name"
-          value={product.name}
-          onChange={handleChange}
-          placeholder="e.g. iPhone 15"
-        />
-      </div>
-
-      {/* SLUG */}
-      <div >
-        <label >Slug *</label>
-        <input
-          name="slug"
-          value={product.slug}
-          onChange={handleChange}
-          placeholder="e.g. iphone-15"
-        />
-      </div>
-
-      {/* SKU */}
-      <div >
-        <label >SKU</label>
-        <input
-          name="sku"
-          value={product.sku}
-          onChange={handleChange}
-          placeholder="Stock Keeping Unit"
-        />
-      </div>
-
-      {/* PRICE */}
-      <div >
-        <label >Price (₹) *</label>
-        <input
-          type="number"
-          name="price"
-          value={product.price}
-          onChange={handleChange}
-        />
-      </div>
-
-      {/* DISCOUNT PRICE */}
-      <div >
-        <label >Discount Price</label>
-        <input
-          type="number"
-          name="discount_price"
-          value={product.discount_price ?? ""}
-          onChange={handleChange}
-        />
-      </div>
-
-      {/* STOCK */}
-      <div >
-        <label >Stock Quantity *</label>
-        <input
-          type="number"
-          name="stock_quantity"
-          value={product.stock_quantity}
-          onChange={handleChange}
-        />
-      </div>
-
-      {/* DESCRIPTION */}
-      <div >
-        <label >Description *</label>
-        <textarea
-          name="description"
-          value={product.description}
-          onChange={handleChange}
-          rows={4}
-        />
-      </div>
-
-      {/* IMAGE */}
-      <div >
-        <label >Product Image *</label>
+      <form onSubmit={handleSubmit}>
         <div>
+          <label>Product Name *</label>
+          <input
+            name="name"
+            value={product.name}
+            onChange={handleChange}
+            placeholder="e.g. iPhone 15"
+          />
+        </div>
+
+        <div>
+          <label>Slug *</label>
+          <input
+            name="slug"
+            value={product.slug}
+            onChange={handleChange}
+            placeholder="e.g. iphone-15"
+          />
+        </div>
+
+        <div>
+          <label>SKU</label>
+          <input
+            name="sku"
+            value={product.sku}
+            onChange={handleChange}
+            placeholder="Stock Keeping Unit"
+          />
+        </div>
+
+        <div>
+          <label>Price (₹) *</label>
+          <input
+            type="number"
+            name="price"
+            value={product.price}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div>
+          <label>Discount Price</label>
+          <input
+            type="number"
+            name="discount_price"
+            value={product.discount_price ?? ""}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div>
+          <label>Stock Quantity *</label>
+          <input
+            type="number"
+            name="stock_quantity"
+            value={product.stock_quantity}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div>
+          <label>Description *</label>
+          <textarea
+            name="description"
+            value={product.description}
+            onChange={handleChange}
+            rows={4}
+          />
+        </div>
+
+        <div>
+          <label>Product Image *</label>
           <input
             type="file"
             accept="image/*"
             onChange={(e) => setFile(e.target.files?.[0] || null)}
           />
-          <br />
-          <button type="button" onClick={handleImageUpload} disabled={uploading}>
+
+          <button
+            type="button"
+            onClick={handleImageUpload}
+            disabled={uploading}
+            style={{ marginTop: 8 }}
+          >
             {uploading ? "Uploading..." : "Upload Image"}
           </button>
 
@@ -236,45 +233,32 @@ return (
             </div>
           )}
         </div>
-      </div>
 
-      {/* CATEGORY */}
-      <div >
-        <label>Category *</label>
-        <select
-          name="category_id"
-          value={product.category_id}
-          onChange={handleChange}
-        >
-          <option value={0}>Select Category</option>
-          {categories.map((c) => (
-            <option key={c.id} value={c.id}>
-              {c.name}
-            </option>
-          ))}
-        </select>
-      </div>
+        <div>
+          <label>Category *</label>
+          <select  name="category_id"  value={product.category_id}  onChange={handleChange}>
+            <option value={0}>Select Category</option>
+            {categories.map((c) => (
+              <option key={c.id} value={c.id}>
+                {c.name}
+              </option>))}
+          </select>
+        </div>
 
-      {/* STATUS */}
-      <div >
-        <label >Status</label>
-        <select
-          name="is_active"
-          value={product.is_active}
-          onChange={handleChange}
-        >
-          <option value={1}>Active</option>
-          <option value={0}>Inactive</option>
-        </select>
-      </div>
+        <div>
+          <label>Status</label>
+          <select  name="is_active"  value={product.is_active} onChange={handleChange}>
+            <option value={1}>Active</option>
+            <option value={0}>Inactive</option>
+          </select>
+        </div>
 
-      <button type="submit" style={{ marginTop: 20 }}>
-        Create Product
-      </button>
-
-    </form>
-  </div>
-);
+        <button type="submit" style={{ marginTop: 20 }}>
+          Create Product
+        </button>
+      </form>
+    </div>
+  );
 };
 
 export default CreateProduct;

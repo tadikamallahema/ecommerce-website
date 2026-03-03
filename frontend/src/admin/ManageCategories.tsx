@@ -112,10 +112,7 @@ const ManageCategories = () => {
                 <td>
                   {editingId === cat.id ? (
                     <>
-                      <button
-                        onClick={() => updateCategory(cat.id)}
-                        style={{ marginRight: "8px" }}
-                      >
+                      <button  onClick={() => updateCategory(cat.id)}  style={{ marginRight: "8px" }}>
                         ✅
                       </button>
                       <button onClick={() => setEditingId(null)}>❌</button>
@@ -123,12 +120,8 @@ const ManageCategories = () => {
                   ) : (
                     <>
                       <button
-                        onClick={() => {
-                          setEditingId(cat.id);
-                          setUpdatedName(cat.name);
-                        }}
-                        style={{ marginRight: "8px" }}
-                      >
+                        onClick={() => {setEditingId(cat.id);setUpdatedName(cat.name);}}
+                        style={{ marginRight: "8px" }}>
                         ✏️
                       </button>
 

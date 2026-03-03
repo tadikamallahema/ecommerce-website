@@ -11,7 +11,6 @@ const Navbar = () => {
         <h3>E-commerce </h3>
             <li><Link to='/register'>Signup</Link></li>
             <li><Link to='/login'>Login</Link></li>
-            {/* <li><Link to='/cart'>Cart</Link></li> */}
             <input type='text' placeholder='Search bar'/>
         </ul>
       </nav>

@@ -12,7 +12,7 @@ const AdminDashboard = () => {
         <li><Link to="/admin/createcategory">Create Categories</Link></li>
         <li><Link to="/admin/manageCategories">Manage Categories</Link></li>
         <li><Link to="/admin/products">View all Products</Link></li>
-        {/* <li><Link></Link></li> */}
+        
         </ul>
       </nav>
     </div>

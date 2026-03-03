@@ -33,7 +33,6 @@ export const createCategory=async(name,description,slug,image_url)=>{
     );
     return row;
 }
-//deleteCategory (soft),  getCategoryTree, toggleCategoryStatus
 
 export const updateCategory=async(id,name,description,slug,image_url,is_active,sort_order)=>{
         const [row]=await db.execute(
