@@ -11,7 +11,7 @@ adminRoutes.post('/verifyprod/:productId',verifyProduct);
 adminRoutes.get('/pendingvendors',getPendingVendorsToApprove);
 adminRoutes.get('/pendingproducts',getPendingProductsToApprove);
 adminRoutes.post('/createcategory',createCategoryA);
-adminRoutes.put('/deletecategory/:categoryId',AdminDeleteCategory);
+adminRoutes.delete('/deletecategory/:categoryId',AdminDeleteCategory);
 adminRoutes.put('/deleteproduct/:productId',AdminDeleteProduct);
 adminRoutes.get('/getAllproducts',getAllProductsBA);
 adminRoutes.put('/updatecatstatus/:categoryId',changeCategoryStatus);

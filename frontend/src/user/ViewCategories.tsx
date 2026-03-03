@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import UserDashboard from './UserDashboard';
 
 interface Category{
     id:number;
@@ -26,6 +27,7 @@ const ViewCategories = () => {
     },[]);
   return (
     <div style={{ padding: "20px" }}>
+      <UserDashboard/>
       <h2>Shop by Category</h2>
 
       {categories.length === 0 ? (

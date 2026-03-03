@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import AdminDashboard from "./AdminDashboard";
 
 interface CategoryCreate {
   name: string;
@@ -123,6 +124,7 @@ const CreateCategory = () => {
 
   return (
     <div style={{ padding: "20px", maxWidth: "500px" }}>
+      <AdminDashboard/>
       <h2>Create Category</h2>
 
       <form onSubmit={handleSubmit}>

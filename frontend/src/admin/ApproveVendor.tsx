@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import AdminDashboard from './AdminDashboard';
 
 interface Vendor{
   id:number;
@@ -13,7 +14,7 @@ const ApproveVendor = () => {
   useEffect(()=>{
     const fetchvendor=async()=>{
       try{
-        const res=await axios.get("http://localhost:2007/api/vendor/pending",
+        const res=await axios.get("http://localhost:2007/api/admin/pendingvendors",
           {withCredentials:true}
         )
         setVendors(res.data.vendors);
@@ -63,6 +64,7 @@ const rejectVendor = async (vendorId: number) => {
 
   return (
     <div style={{ padding: "20px" }}>
+      <AdminDashboard/>
       <h1>Vendor Verification</h1>
 
       {vendors.length === 0 ? (

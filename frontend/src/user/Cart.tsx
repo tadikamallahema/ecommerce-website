@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import UserDashboard from "./UserDashboard";
 
 interface CartItem {
   product_id: number;
@@ -50,6 +51,7 @@ const Cart = () => {
 
   return (
     <div style={{ padding: 20 }}>
+      <UserDashboard/>
       <h2>Your Cart</h2>
 
       {items.length === 0 && <p>Cart is empty</p>}

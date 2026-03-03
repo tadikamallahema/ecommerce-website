@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import AdminDashboard from './AdminDashboard';
 
 interface Product{
   id:number;
@@ -28,6 +29,7 @@ const GetAllProducts = () => {
 
   return (
     <div>
+      <AdminDashboard/>
       <h4>Get all products page </h4>
       {product.length===0 ?(<p>No products found</p>):
         (

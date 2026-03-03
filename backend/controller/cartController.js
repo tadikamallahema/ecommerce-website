@@ -1,5 +1,6 @@
 import { addItemToCart, getCartItems, removeCartItems,removeSingleCartItem, updateQuantity } from "../models/cartItemsModel.js";
 import { createCartforUser, getCartByUser } from "../models/cartModel.js";
+import { getProductByIdAcc } from "../models/productModel.js";
 
 
 export const getCart=async(req,res)=>{
@@ -35,7 +36,7 @@ export const addToCart=async(req,res)=>{
         }
 
         // Always fetch real price from DB — never trust client
-        const product = await getProductById(productId);
+        const product = await getProductByIdAcc(productId);
         if (!product) {
             return res.status(404).json({ success: false, message: "Product not found or unavailable" });
         }
@@ -53,6 +54,7 @@ export const addToCart=async(req,res)=>{
         return res.status(200).json({ success: true, message: "Item added to cart" });
 
     } catch (err) {
+      console.log(err);
         return res.status(500).json({ success: false, message: err.message });
     }
 };

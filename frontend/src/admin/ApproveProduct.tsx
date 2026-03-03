@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import AdminDashboard from "./AdminDashboard";
 
 interface Product {
   id: number;
@@ -58,6 +59,7 @@ const ApproveProduct = () => {
 
   return (
     <div style={{ padding: "20px" }}>
+      <AdminDashboard/>
       <h1>Product Approval</h1>
 
       {products.length === 0 ? (

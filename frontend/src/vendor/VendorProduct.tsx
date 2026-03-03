@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import VendorDashboard from './VendorDashboard';
 
 interface Products{
   id:number;
@@ -28,6 +29,7 @@ const VendorProduct = () => {
 
   return (
     <div>
+       <VendorDashboard/>
       <h3> Products by each vendor</h3>
       {product.length===0 ? (<p>No product is found</p>):
       (<table>

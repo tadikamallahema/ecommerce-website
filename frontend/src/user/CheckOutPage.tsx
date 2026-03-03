@@ -65,7 +65,7 @@ const CheckOutPage = () => {
     );
 
     alert("Order placed successfully!");
-    navigate("/orders");
+    navigate("user/history");
 
   } catch (err: any) {
     alert(err.response?.data?.message || "Payment failed");

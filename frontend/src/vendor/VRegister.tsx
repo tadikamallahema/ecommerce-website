@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react'
+import VendorDashboard from './VendorDashboard';
 
 interface Vendor{
     name:string;
@@ -37,6 +38,7 @@ const VRegister = () => {
     }
   return (
     <div>
+         <VendorDashboard/>
         <h3>Vendor Signup Page </h3>
        <form onSubmit={handleSubmit}>
         <div>

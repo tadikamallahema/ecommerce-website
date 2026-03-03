@@ -4,6 +4,6 @@ import authMiddleware from '../middleware/authMiddleware.js';
 
 const userRouter=express.Router();
 
-userRouter.get('/productsByCategory/:categoryId',getAllProductsByCategory);
+userRouter.get('/productsByCategory/:categoryId',authMiddleware,getAllProductsByCategory);
 userRouter.get('/profile',authMiddleware,getUserByUserId);
 export default userRouter;

@@ -32,7 +32,7 @@ export const getPendingVendorsToApprove=async(req,res)=>{
   try{
     const vendors=await getPendingVendors();
     if(!vendors|| vendors.length===0){
-      return res.status(404).json({success:false,message:"No vendors are pending to approve"})
+      return res.status(200).json({success:true,vendors,message:"No vendors are pending to approve"})
     }
     
       return res.status(200).json({success:true,vendors})
@@ -65,19 +65,19 @@ export const createCategoryA=async(req,res)=>{
   }
 }
 export const AdminDeleteCategory=async(req,res)=>{
-  const {categoryId}=req.params;
+  const categoryId=Number(req.params.categoryId);
   try{
     const category=await getCategoryById(categoryId);
     if(!category){
       return res.status(400).json({success:false,message:"No Category is found "});
     }
-    console.log(categoryId);
+    //console.log(categoryId);
     await deleteCategory(categoryId);
-    console.log(categoryId);
+    //console.log(categoryId);
     return res.status(200).json({success:true,message: "Category deleted successfully" });
   }catch(err){
-    return res.status(500).json({success:false,message:err.message});
     console.log(err);
+    return res.status(500).json({success:false,message:err.message});
   }
 }
 /*
@@ -136,7 +136,7 @@ export const getPendingProductsToApprove=async(req,res)=>{
   try{
     const products=await pendingProducts();
     if(!products || products.length===0){
-      return res.status(404).json({success:false,message:"No products are pending to approve"})
+      return res.status(200).json({success:true,products:[],message:"No products are pending to approve"})
     }
       return res.status(200).json({success:true,products})
   

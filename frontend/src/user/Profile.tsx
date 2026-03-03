@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import UserDashboard from './UserDashboard';
 
 interface User {
   id: number;
@@ -33,6 +34,7 @@ const Profile = () => {
 
   return (
     <div>
+      <UserDashboard/>
       <h3>Profile Page</h3>
       <p>Name: {user.name}</p>
       <p>Email: {user.email}</p>

@@ -90,6 +90,7 @@ export const getMyOrder=async(req,res)=>{
     return res.status(200).json({success:true,orders})
 };
 
+
 export const getOrderDetails=async(req,res)=>{
     const items=await getOrderItems(req.params.orderId);
     if(!items) return res.status(404).json({success:false,message:"No Items are there for the order"})
@@ -134,6 +135,30 @@ export const updateOrderStatus = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: err.message
+    });
+  }
+};
+
+export const getUserOrderHistory = async (req, res) => {
+  try {
+    const userId = req.user.id; // assuming auth middleware
+
+    const orders = await getUserOrders(userId); // DB call
+
+    // ✅ filter only successful orders
+    const successfulOrders = orders.filter(
+      (order) => order.status === "paid"
+    );
+
+    return res.status(200).json({
+      success: true,
+      orders: successfulOrders,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({
+      success: false,
+      message: err.message,
     });
   }
 };

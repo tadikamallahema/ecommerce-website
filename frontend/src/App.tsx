@@ -21,6 +21,8 @@ import ViewCategories from "./user/ViewCategories.tsx";
 import CategoryProducts from "./user/CategoryProducts.tsx";
 import CheckOutPage from "./user/CheckOutPage.tsx";
 import Profile from "./user/Profile.tsx";
+import OrderHistory from "./user/OrderHistory.tsx";
+import CreateProduct from "./vendor/CreateProduct.tsx";
 
 
 function App() {
@@ -29,7 +31,7 @@ function App() {
     <>
       <Routes>
         <Route path="/user/categories" element={<ViewCategories/>}/>
-        <Route path="/category/:id" element={<CategoryProducts />} />
+        {/* <Route path="/category/:id" element={<CategoryProducts />} /> */}
         {/* ---------- PUBLIC ---------- */}
         <Route path="/" element={<Home />} />
         {/* USER AUTH */}
@@ -44,6 +46,14 @@ function App() {
         <Route path="/admin/login" element={<AdminLogin />} />
 
         {/* ---------- USER ---------- */}
+        <Route
+          path="/category/:id"
+          element={
+            <ProtectedRoutes allowedRoles={["user"]}>
+              <CategoryProducts />
+            </ProtectedRoutes>
+          }
+        />
         <Route
           path="/user"
           element={
@@ -76,6 +86,14 @@ function App() {
             </ProtectedRoutes>
           }
         />
+        <Route
+          path="/user/history"
+          element={
+            <ProtectedRoutes allowedRoles={["user"]}>
+              <OrderHistory />
+            </ProtectedRoutes>
+          }
+        />
 
         {/* ---------- VENDOR ---------- */}
         <Route
@@ -91,6 +109,14 @@ function App() {
           element={
             <ProtectedRoutes allowedRoles={["vendor"]}>
               <VendorProduct />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="/vendor/createproduct"
+          element={
+            <ProtectedRoutes allowedRoles={["vendor"]}>
+              <CreateProduct />
             </ProtectedRoutes>
           }
         />
@@ -121,21 +147,21 @@ function App() {
           }
         />
         <Route
-          path="/admin/manage-categories"
+          path="/admin/manageCategories"
           element={
             <ProtectedRoutes allowedRoles={["admin"]}>
               <ManageCategories />
             </ProtectedRoutes>
           }
         />
-        {/* <Route
+         <Route
           path="/admin/products"
           element={
             <ProtectedRoutes allowedRoles={["admin"]}>
               <GetAllProducts />
             </ProtectedRoutes>
           }
-        /> */}
+        /> 
         <Route
           path="/admin/createcategory"
           element={

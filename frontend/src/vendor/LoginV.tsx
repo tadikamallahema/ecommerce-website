@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import VendorDashboard from './VendorDashboard';
 
 interface Vendor{
     email:string;
@@ -36,6 +37,7 @@ const LoginV = () => {
     }
   return (
     <div>
+        <VendorDashboard/>
       <h1> Login Page</h1>
       <form onSubmit={handleSubmit}>
         <div>

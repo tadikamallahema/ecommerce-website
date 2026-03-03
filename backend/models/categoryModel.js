@@ -44,7 +44,7 @@ export const updateCategory=async(id,name,description,slug,image_url,is_active,s
 }
 export const getCategoryById=async(id)=>{
     const [res]=await db.execute(
-        `select * from category where id=? and is_active=1 and is_admin_verified=1`,[id]
+        `select * from category where id=? and is_active=1 `,[id]
     );
     return res;
 }
