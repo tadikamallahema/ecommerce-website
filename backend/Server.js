@@ -9,6 +9,7 @@ import imageUpload from './routes/imageUpload.js';
 import userRouter from './routes/userRoutes.js';
 import cartRoutes from './routes/cartRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
+import paymentRouter from './routes/paymentRoutes.js';
 /* import { alterUserTable, createUserTable } from './models/userModel.js';
 import { alterVendorTable, createVendorTable } from './models/vendorModel.js';
 import createAdminTable from './models/adminModel.js';
@@ -47,6 +48,7 @@ app.use('/api/vendor',vendorRoutes);
 app.use('/api/user',userRouter);
 app.use('/api/cart',cartRoutes);
 app.use('/api/orders',orderRoutes);
+app.use('/api/pay',paymentRouter);
 app.listen(port ,()=>{
     console.log(`Server is runnin on ${port}`);
 })

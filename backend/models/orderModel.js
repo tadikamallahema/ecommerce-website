@@ -36,3 +36,10 @@ export const updateOrderStatusById = async (orderId, userId, status) => {
   );
   return result.affectedRows;
 };
+
+export const getOrderById=async(order_id)=>{
+    const [res]=await db.execute(
+        `select * from orders where id=? `,[order_id]
+    );
+    return res[0];
+}
