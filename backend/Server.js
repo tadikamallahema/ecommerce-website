@@ -10,6 +10,7 @@ import userRouter from './routes/userRoutes.js';
 import cartRoutes from './routes/cartRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import paymentRouter from './routes/paymentRoutes.js';
+import createPaymentTable from './models/paymentModel.js';
 /* import { alterUserTable, createUserTable } from './models/userModel.js';
 import { alterVendorTable, createVendorTable } from './models/vendorModel.js';
 import createAdminTable from './models/adminModel.js';
@@ -41,6 +42,7 @@ await createCartTable();
 await createCartItemTable();
 await createOrderTable();
 await createOrderItemsTable(); */
+await createPaymentTable();
 app.use('/api',authRoutes);
 app.use('/api/img',imageUpload);
 app.use('/api/admin',adminRoutes);

@@ -1,7 +1,7 @@
 import crypto from "crypto";
 import razorpay from "../config/razorPay.js";
-import { getOrderById, updateOrderStatusById } from "../models/orderModel";
-import { createPayment, getUserPayments, markPaymentFailure, markPaymentSuccess, updateToVerify } from "../models/paymentModel";
+import { getOrderById, updateOrderStatusById } from "../models/orderModel.js";
+import { createPayment, getUserPayments, markPaymentFailure, markPaymentSuccess, updateToVerify } from "../models/paymentModel.js";
 
 export const createPaymentOrder=async(req,res)=>{
     try{

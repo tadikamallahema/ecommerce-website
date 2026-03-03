@@ -44,7 +44,7 @@ const CheckOutPage = () => {
       setLoading(false);
     }
   };
-
+/* 
   const handlePay = async () => {
     try {
     const res = await axios.post(
@@ -67,7 +67,72 @@ const CheckOutPage = () => {
   } catch (err: any) {
     alert(err.response?.data?.message || "Payment failed");
   }
-  };
+  }; */
+  const handlePay = async () => {
+  try {
+    // 1️⃣ Place Order (status should remain pending)
+    const orderRes = await axios.post(
+      "http://localhost:2007/api/orders/placeorder",
+      {},
+      { withCredentials: true }
+    );
+
+    const orderId = orderRes.data.orderId;
+
+    // 2️⃣ Create Razorpay Order
+    const paymentRes = await axios.post(
+      "http://localhost:2007/api/pay/createPayment",
+      { orderId },
+      { withCredentials: true }
+    );
+
+    const razorpayOrder = paymentRes.data.razorpayOrder;
+
+    // 3️⃣ Open Razorpay Checkout
+    const options = {
+      key: "rzp_test_SMpYPnNodatL0t",
+      amount: razorpayOrder.amount,
+      currency: "INR",
+      order_id: razorpayOrder.id,
+
+      handler: async function (response: any) {
+        // 4️⃣ Verify Payment
+        await axios.post(
+          "http://localhost:2007/api/payments/verify",
+          {
+            order_id: orderId,
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_signature: response.razorpay_signature,
+            razorpay_order_id: razorpayOrder.id,
+          },
+          { withCredentials: true }
+        );
+
+        alert("Payment Successful!");
+        navigate("/user/history");
+      },
+
+      modal: {
+        ondismiss: async function () {
+          await axios.post(
+            "http://localhost:2007/api/payments/failure",
+            {
+              order_id: orderId,
+              reason: "User closed payment popup",
+            },
+            { withCredentials: true }
+          );
+        },
+      },
+    };
+
+    const rzp = new (window as any).Razorpay(options);
+    rzp.open();
+
+  } catch (err: any) {
+    alert(err.response?.data?.message || "Payment failed");
+  }
+};
 
   if (loading) return <p>Loading checkout...</p>;
   if (error) return <p>{error}</p>;
