@@ -96,7 +96,7 @@ const Login = () => {
 
       alert("Login Successful");
       console.log(res.data);
-      navigate("/user");
+      navigate("/user/profile",{ replace: true });
     } catch (err: any) {
       alert(err.response?.data?.message || "Login Failed");
     } finally {

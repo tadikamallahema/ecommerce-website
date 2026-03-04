@@ -6,10 +6,12 @@ const VendorDashboard = () => {
     <div>
       <h3> Vendor Dashboard page </h3>
       <nav>
-        <li><Link to="/vendor/register">Vendor Registration</Link></li>
-        <li><Link to="/vendor/login">Vendor Login </Link></li>
-        <li><Link to="/vendor/products">Products</Link></li>
-        <li><Link to="/vendor/createproduct">Create Product</Link></li>
+        <ul>
+          <li><Link to="/vendor/register">Vendor Registration</Link></li>
+          <li><Link to="/vendor/login">Vendor Login </Link></li>
+          <li><Link to="/vendor/products">Products</Link></li>
+          <li><Link to="/vendor/createproduct">Create Product</Link></li>
+        </ul>
       </nav>
     </div>
   )

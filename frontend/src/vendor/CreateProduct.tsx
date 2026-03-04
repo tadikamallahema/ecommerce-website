@@ -44,7 +44,7 @@ const CreateProduct = () => {
 
   const fetchCategories = async () => {
     const res = await axios.get(
-      "http://localhost:2007/api/admin/getallcategories",
+      "http://localhost:2007/api/user/getallcategories",
       { withCredentials: true }
     );
     setCategories(res.data.categories);

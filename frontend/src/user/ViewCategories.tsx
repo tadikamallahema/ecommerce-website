@@ -105,7 +105,7 @@ const ViewCategories = () => {
     const fetchCategories = async () => {
       try {
         const result = await axios.get(
-          "http://localhost:2007/api/admin/getallcategories",
+          "http://localhost:2007/api/user/getallcategories",
           { withCredentials: true }
         );
         setCategories(result.data.categories);

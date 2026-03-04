@@ -9,7 +9,7 @@ const vendorRoutes=express.Router();
 
 //vendorRoutes.get('/pending',getNotVeriedVendors);
 vendorRoutes.get('/prodbyvendor',authMiddleware, authorize("vendor"),getProductsByVendorV);
-vendorRoutes.post('/createproduct',authMiddleware,createProductByVendor);
-vendorRoutes.put('/deleteprod/:productId',deleteProductByVendor);
-vendorRoutes.put('/updatequantity/:productId',updateStockQuantity);
+vendorRoutes.post('/createproduct',authMiddleware,authorize("vendor"),createProductByVendor);
+vendorRoutes.put('/deleteprod/:productId',authMiddleware,authorize("vendor","admin"),deleteProductByVendor);
+vendorRoutes.put('/updatequantity/:productId',authMiddleware,authorize("vendor"),updateStockQuantity);
 export default vendorRoutes;
