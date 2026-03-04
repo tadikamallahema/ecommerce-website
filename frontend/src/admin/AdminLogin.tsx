@@ -28,7 +28,7 @@ const AdminLogin = () => {
             });
         alert('Admin Logged in successfully');
         console.log(res.data);
-        navigate('/admin');
+        navigate('/admin',{ replace: true });
         }catch(err:any){
             alert(err.message);
         }

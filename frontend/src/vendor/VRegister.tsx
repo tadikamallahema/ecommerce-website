@@ -37,8 +37,9 @@ const VRegister = () => {
         }
     }
   return (
-    <div>
+    <>
          <VendorDashboard/>
+    <div className="auth-container">
         <h3>Vendor Signup Page </h3>
        <form onSubmit={handleSubmit}>
         <div>
@@ -68,6 +69,7 @@ const VRegister = () => {
         <button type='submit'>Submit</button>
       </form>
     </div>
+    </>
   )
 }
 

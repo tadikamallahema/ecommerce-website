@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import AdminDashboard from "./AdminDashboard";
+import '../vendor/Vendor.css'
 
 interface CategoryCreate {
   name: string;
@@ -122,31 +123,32 @@ const CreateCategory = () => {
   };
 
   return (
-    <div style={{ padding: "20px", maxWidth: "500px" }}>
+    <>
       <AdminDashboard/>
-      <h2>Create Category</h2>
+    <div className="create-product-container">
+      <h2 className="create-product-title">Create Category</h2>
 
       <form onSubmit={handleSubmit}>
 
-        <div>
+        <div className="form-group">
           <label>Name *</label>
           <input type="text"  name="name"  value={category.name}  onChange={handleChange}  required/>
         </div>
 
-        <div>
+        <div className="form-group">
           <label>Description</label>
           <textarea  name="description"  value={category.description}  onChange={handleChange}/>
         </div>
 
-        <div>
+        <div className="form-group">
           <label>Slug</label>
           <input  type="text"  name="slug"  value={category.slug}  onChange={handleChange}/>
         </div>
 
-        <div>
+        <div className="form-group">
           <label>Category Image</label>
           <input  type="file"  accept="image/*" onChange={(e) =>  setFile(e.target.files?.[0] || null)}/>
-          <button  type="button"  onClick={handleImageUpload}  disabled={uploading}>
+          <button  type="button"  onClick={handleImageUpload}  disabled={uploading} className="upload-btn">
             {uploading ? "Uploading..." : "Upload Image"}
           </button>
 
@@ -172,12 +174,12 @@ const CreateCategory = () => {
           )}
         </div>
 
-        <div>
+        <div className="form-group">
           <label>Parent Category ID</label>
           <input  type="number"  name="parent_id"  value={category.parent_id ?? ""}  onChange={handleChange}/>
         </div>
 
-        <div>
+        <div className="form-group">
           <label>Status</label>
           <select  name="is_active"  value={category.is_active}  onChange={handleChange}>
             <option value={1}>Active</option>
@@ -185,17 +187,18 @@ const CreateCategory = () => {
           </select>
         </div>
 
-        <div>
+        <div className="form-group">
           <label>Sort Order</label>
           <input  type="number"  name="sort_order"  value={category.sort_order}  onChange={handleChange}/>
         </div>
 
-        <button type="submit" style={{ marginTop: "10px" }}>
+        <button type="submit" className="submit-btn">
           Create Category
         </button>
 
       </form>
     </div>
+    </>
   );
 };
 

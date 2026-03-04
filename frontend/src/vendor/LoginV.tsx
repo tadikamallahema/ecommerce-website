@@ -29,7 +29,7 @@ const LoginV = () => {
             alert('Login Successfull');
             console.log(res.data);
             console.log(form);
-            navigate('/vendor');
+            navigate('/vendor',{ replace: true });
         }catch(err:any){
             alert(err.message);
             console.log(err);
@@ -38,7 +38,8 @@ const LoginV = () => {
   return (
     <div>
         <VendorDashboard/>
-      <h1> Login Page</h1>
+      <div className="auth-container">
+        <h1> Login Page</h1>
       <form onSubmit={handleSubmit}>
         <div>
             <label>Enter Email:</label>
@@ -50,6 +51,7 @@ const LoginV = () => {
         </div>
         <button type='submit'>Submit</button>
       </form>
+      </div>
     </div>
   )
 }

@@ -1,0 +1,79 @@
+.create-product-container{
+  max-width: 720px;
+  margin: 40px auto;
+  padding: 30px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.create-product-title{
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 22px;
+}
+
+.form-group{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+}
+
+.form-group label{
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select{
+  padding: 10px;
+  border: 1px solid #dcdcdc;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: border 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{
+  border-color: #4f6bed;
+  outline: none;
+}
+
+.upload-btn{
+  margin-top: 8px;
+  padding: 8px 14px;
+  background: #4f6bed;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.upload-btn:hover{
+  background:#3c56c8;
+}
+
+.submit-btn{
+  width: 100%;
+  margin-top: 20px;
+  padding: 12px;
+  background:#2ecc71;
+  color:white;
+  border:none;
+  border-radius:6px;
+  font-size:16px;
+  cursor:pointer;
+}
+
+.submit-btn:hover{
+  background:#27ae60;
+}
+
+.preview-image{
+  margin-top:10px;
+  border-radius:6px;
+  border:1px solid #eee;
+}

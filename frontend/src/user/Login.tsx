@@ -113,13 +113,7 @@ const Login = () => {
         <form onSubmit={handleSubmit}>
           <div>
             <label>Email</label>
-            <input
-              type="email"
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-              required
-            />
+            <input  type="email"  name="email"  value={form.email}  onChange={handleChange}  required/>
           </div>
 
           <div>

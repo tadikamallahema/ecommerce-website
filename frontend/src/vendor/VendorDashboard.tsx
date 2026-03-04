@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 const VendorDashboard = () => {
   return (
     <div>
-      <h3> Vendor Dashboard page </h3>
+      {/* <h3> Vendor Dashboard page </h3> */}
       <nav>
         <ul>
           <li><Link to="/vendor/register">Vendor Registration</Link></li>
