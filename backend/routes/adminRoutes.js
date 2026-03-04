@@ -1,5 +1,5 @@
 import express from 'express';
-import { AdminDeleteCategory, AdminDeleteProduct, changeCategoryStatus, changeProductStatus, createCategoryA, getAllProductsBA, getPendingProductsToApprove, getPendingVendorsToApprove, verifyProduct, verifyVendor } from '../controller/adminController.js';
+import { AdminDeleteCategory, AdminDeleteProduct, changeCategoryStatus, changeProductStatus, createCategoryA, getAllProductsBA, getPendingProductsToApprove, getPendingVendorsToApprove, updateCatName, verifyProduct, verifyVendor } from '../controller/adminController.js';
 import { getAllVendors } from '../controller/vendorController.js';
 import authMiddleware from '../middleware/authMiddleware.js';
 import { authorize } from '../middleware/authorize.js';
@@ -18,7 +18,7 @@ adminRoutes.delete('/deleteproduct/:productId',AdminDeleteProduct);
 adminRoutes.get('/getAllproducts',getAllProductsBA);
 adminRoutes.put('/updatecatstatus/:categoryId',changeCategoryStatus);
 adminRoutes.put('/updateprodstatus/:productId',changeProductStatus);
-
+adminRoutes.put('/updatename/:Id',updateCatName);
 
 
 export default adminRoutes;

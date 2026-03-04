@@ -54,7 +54,7 @@ const ManageCategories = () => {
 
     try {
       await axios.put(
-        `http://localhost:2007/api/admin/category/${id}`,
+        `http://localhost:2007/api/admin/updatename/${id}`,
         { name: updatedName },
         { withCredentials: true }
       );

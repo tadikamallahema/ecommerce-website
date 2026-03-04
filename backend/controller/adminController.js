@@ -1,3 +1,4 @@
+import { updateCategory } from "../models/adminModel.js";
 import { getCategoryBySlug ,createCategory, getCategoryById, deleteCategory, toggleCategoryStatus, getAllCategories} from "../models/categoryModel.js";
 import { approveProduct, createProduct, deleteProduct, getAllProducts, getProductByIdAcc, getProductByIdPen, getProductBySlug, pendingProducts, rejectProduct, toggleProductStatus } from "../models/productModel.js";
 import { getVById,approveVendor,rejectVendor, getPendingVendors } from "../models/vendorModel.js";
@@ -41,8 +42,6 @@ export const getPendingVendorsToApprove=async(req,res)=>{
     return res.status(500).json({success:false,message:err.message});
   }
 }
-
-
 
 export const createCategoryA=async(req,res)=>{
   const {name,description,slug,image_url}=req.body;
@@ -173,7 +172,10 @@ export const changeCategoryStatus=async(req,res)=>{
   const { is_active } = req.body;
   if (is_active === undefined) return res.status(400).json({ message: "is_active required" });
   try{
-    await toggleCategoryStatus(categoryId,is_active);
+    const result =await toggleCategoryStatus(categoryId,is_active);
+    if(result.affectedRows === 0){
+      return res.status(404).json({success:false,message:"Category not found"});
+    }
     return res.status(200).json({ success: true, message: `category ${is_active ? "activated" : "deactivated"} successfully` });
 
   }catch (err) {
@@ -190,5 +192,27 @@ export const changeProductStatus=async(req,res)=>{
 
   }catch (err) {
     return res.status(500).json({ success: false, message: err.message });
+  }
+}
+
+export const updateCatName=async(req,res)=>{
+  try{
+    const {Id}=req.params;
+    const {name}=req.body;
+    //console.log(Id,name);
+    if(!Id || !name){
+      return res.status(400).json({success: false,message: "Invalid category id"});
+    }
+    if (!name || name.trim() === "") {
+      return res.status(400).json({success: false,message: "Category name cannot be empty"});
+    }
+    const result = await updateCategory(Id, name);
+     if(result.affectedRows === 0){
+      return res.status(404).json({success:false,message:"Category not found"});
+    }
+    return res.status(200).json({ success: true, message: "Category name updated successfully" });
+
+  }catch(err){
+    return res.status(500).json({success:false,message:err.message});
   }
 }

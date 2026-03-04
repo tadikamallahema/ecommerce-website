@@ -31,3 +31,11 @@ export const getAdminByEmail = async (email) => {
   );
   return row[0];
 };
+export const updateCategory = async (id, name) => {
+  const [result] = await db.execute(
+    `UPDATE category SET name=? WHERE id=?`,
+    [name, id]
+  );
+
+  return result;
+};
