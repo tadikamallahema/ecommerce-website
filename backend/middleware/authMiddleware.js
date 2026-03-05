@@ -17,3 +17,34 @@ import jwt from 'jsonwebtoken';
     }
 }
 export default authMiddleware;
+
+
+export const refreshAccessToken = (req, res) => {
+
+  const refreshToken = req.cookies?.refreshToken;
+
+  if (!refreshToken) {
+    return res.status(401).json({success: false,message: "Refresh token missing"});
+  }
+
+  try {
+    const decoded = jwt.verify(refreshToken, process.env.REFRESH_SECRET);
+
+    const newAccessToken = jwt.sign(
+      { id: decoded.id, role: decoded.role },
+      process.env.JWT_SECRET,
+      { expiresIn: "10m" }
+    );
+
+    res.cookie("token", newAccessToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+      maxAge: 10 * 60 * 1000
+    });
+
+    return res.status(200).json({success: true,message: "Access token refreshed"});
+  } catch (err) {
+    return res.status(403).json({success: false,message: "Invalid refresh token"});
+  }
+};

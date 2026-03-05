@@ -36,6 +36,7 @@ export const userLogin=async(req,res)=>{
             return res.status(401).json({message:"Passowrd is Invalid"});
         }
         const token=jwt.sign({id:user.id, role:user.role},process.env.JWT_SECRET,{expiresIn:'10m'});
+        const refreshToken=jwt.sign({id:user.id,role:user.role},process.env.REFRESH_SECRET,{expiresIn:'1d'});
         res.cookie("token",token,
             {
                 httpOnly:true,
@@ -43,6 +44,12 @@ export const userLogin=async(req,res)=>{
                 sameSite:"lax",
                 maxAge:10*60*1000
             } );
+        res.cookie("refreshToken",refreshToken,{
+            httpOnly:true,
+            secure:false,
+            sameSite:"lax",
+            maxAge:1*24*60*60*1000      //1 day
+        })
         return res.status(200).json({message:"User LoggedIn successfully and token is stored in cookies",user});
     }catch(err){
         return res.status(500).json({message:err.message});
