@@ -11,6 +11,7 @@ import cartRoutes from './routes/cartRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import paymentRouter from './routes/paymentRoutes.js';
 import createPaymentTable from './models/paymentModel.js';
+import { searchInput } from './controller/productController.js';
 /* import { alterUserTable, createUserTable } from './models/userModel.js';
 import { alterVendorTable, createVendorTable } from './models/vendorModel.js';
 import createAdminTable from './models/adminModel.js';
@@ -51,6 +52,7 @@ app.use('/api/user',userRouter);
 app.use('/api/cart',cartRoutes);
 app.use('/api/orders',orderRoutes);
 app.use('/api/pay',paymentRouter);
+app.get('/api/search',searchInput);
 app.listen(port ,()=>{
     console.log(`Server is runnin on ${port}`);
 })
