@@ -1,2 +1,5 @@
 node_modules
 .env
+
+
+SENDGRID_API_KEY=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

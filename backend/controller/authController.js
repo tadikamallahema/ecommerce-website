@@ -3,20 +3,46 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { createVendor, getVByEmail } from "../models/vendorModel.js";
 import { createAdmin, getAdminByEmail } from "../models/adminModel.js";
+import crypto from "crypto";
+import { sendEmail } from "../config/email.js";
+
 export const userRegister=async(req,res)=>{
     try{
     const {name,phone_number,email,password}=req.body;
     if(!name || !phone_number|| !email||!password){
-        return res.status(400).json({success:true,message:"Few details are missing"});
+        return res.status(400).json({success:false,message:"Few details are missing"});
     }
     const existingUser=await getUserByEmail(email);
     if(existingUser){
         return res.status(409).json({success:true,message:"User already exists"});
     }
     const hashed=await bcrypt.hash(password,10);
-    await createUser(name,phone_number,email,hashed);
-    return res.status(201).json({message:"User registered Successfully"}, );
+    // code to send email 
+    const token=crypto.randomBytes(32).toString("hex");
+    const expiry= new Date(Date.now()+24*60*60*1000);
+
+
+    await createUser(name,phone_number,email,hashed,token,expiry);
+
+    const verifyLink=`http://localhost:2007/api/verify-email/${token}`;
+    const emailHTML = `
+      <h2>Verify Your Account</h2>
+      <p>Please click the button below to verify your email.</p>
+
+      <a href="${verifyLink}" 
+         style="padding:10px 20px;background:#4CAF50;color:white;text-decoration:none;border-radius:5px;">
+         Verify Email
+      </a>
+
+      <p>If the button doesn't work, copy this link:</p>
+      <p>${verifyLink}</p>
+    `;
+    try{
+    await sendEmail(email,"Verify your account ",emailHTML);
+    }catch(err){ console.log("Email sending failed",err.message);}
+    return res.status(201).json({message:"User registered,.Please verify your email"}, );
     }catch(err){
+        console.log(err);
         return res.status(500).json({message:err.message});
     }
 }

@@ -27,15 +27,39 @@ export const alterUserTable=()=>{
     );
     console.log("Altered table by adding rows");
 };
+export const alterUserTable2 = () => {
+    db.execute(`
+        ALTER TABLE users
+        ADD COLUMN email_verification_token VARCHAR(255) NULL,
+        ADD COLUMN email_verification_expiry TIMESTAMP NULL
+    `);
+
+    console.log("User table altered: verification columns added");
+};
 
 
-export const createUser=async(name,phone_number,email,password)=>{
+/* export const createUser=async(name,phone_number,email,password,email_verification_token,email_verification_expiry)=>{
     const [result]=await db.execute(
-    `insert into users(name,phone_number,email,password) values(?,?,?,?)`,
-    [name,phone_number,email,password]);
+    `insert into users(name,phone_number,email,password) values(?,?,?,?,?,?)`,
+    [name,phone_number,email,password,email_verification_token,email_verification_expiry]);
 
     return result;
-}
+} */
+
+export const createUser = async (
+  name,
+  phone_number,
+  email,password,token,expiry) => {
+
+  const query = `
+  INSERT INTO users
+  (name,phone_number,email,password,email_verification_token,email_verification_expiry)
+  VALUES (?,?,?,?,?,?)
+  `;
+
+  return db.execute(query,[name,phone_number,email,password,token,expiry]);
+};
+
 export const getUserByEmail=async(email)=>{
     const [row]=await db.execute(
         `select * from users where email=? and is_active=true`,[email]

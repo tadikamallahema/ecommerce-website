@@ -12,6 +12,8 @@ import orderRoutes from './routes/orderRoutes.js';
 import paymentRouter from './routes/paymentRoutes.js';
 import createPaymentTable from './models/paymentModel.js';
 import { searchInput } from './controller/productController.js';
+import { alterUserTable2 } from './models/userModel.js';
+import { verifyEmail } from './controller/emailController.js';
 /* import { alterUserTable, createUserTable } from './models/userModel.js';
 import { alterVendorTable, createVendorTable } from './models/vendorModel.js';
 import createAdminTable from './models/adminModel.js';
@@ -43,7 +45,8 @@ await createCartTable();
 await createCartItemTable();
 await createOrderTable();
 await createOrderItemsTable(); */
-await createPaymentTable();
+//await createPaymentTable();
+/* await alterUserTable2(); */
 app.use('/api',authRoutes);
 app.use('/api/img',imageUpload);
 app.use('/api/admin',adminRoutes);
@@ -53,6 +56,7 @@ app.use('/api/cart',cartRoutes);
 app.use('/api/orders',orderRoutes);
 app.use('/api/pay',paymentRouter);
 app.get('/api/search',searchInput);
+app.get('/api/verify-email/:token',verifyEmail);
 app.listen(port ,()=>{
     console.log(`Server is runnin on ${port}`);
 })
