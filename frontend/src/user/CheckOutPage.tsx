@@ -98,7 +98,7 @@ const CheckOutPage = () => {
       handler: async function (response: any) {
         // 4️⃣ Verify Payment
         await axios.post(
-          "http://localhost:2007/api/payments/verify",
+          "http://localhost:2007/api/pay/verify",
           {
             order_id: orderId,
             razorpay_payment_id: response.razorpay_payment_id,
@@ -115,7 +115,7 @@ const CheckOutPage = () => {
       modal: {
         ondismiss: async function () {
           await axios.post(
-            "http://localhost:2007/api/payments/failure",
+            "http://localhost:2007/api/pay/failure",
             {
               order_id: orderId,
               reason: "User closed payment popup",

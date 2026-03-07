@@ -14,6 +14,7 @@ import createPaymentTable from './models/paymentModel.js';
 import { searchInput } from './controller/productController.js';
 import { alterUserTable2 } from './models/userModel.js';
 import { verifyEmail } from './controller/emailController.js';
+import { logout } from './controller/authController.js';
 /* import { alterUserTable, createUserTable } from './models/userModel.js';
 import { alterVendorTable, createVendorTable } from './models/vendorModel.js';
 import createAdminTable from './models/adminModel.js';
@@ -56,7 +57,8 @@ app.use('/api/cart',cartRoutes);
 app.use('/api/orders',orderRoutes);
 app.use('/api/pay',paymentRouter);
 app.get('/api/search',searchInput);
-app.get('/api/verify-email/:token',verifyEmail);
+app.post('/api/logout',logout);
+app.get('/api/verifyemail/:token',verifyEmail);
 app.listen(port ,()=>{
     console.log(`Server is runnin on ${port}`);
 })
