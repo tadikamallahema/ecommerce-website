@@ -35,7 +35,8 @@ function App() {
       <Routes>
         <Route path="/user/categories" element={<ViewCategories/>}/>
         {/* <Route path="/category/:id" element={<CategoryProducts />} /> */}
-        
+        <Route path="/checkemail" element={<CheckEmail/>}/>
+        <Route path="/verifyemail/:token" element={<VerifyEmail/>}/>
         <Route path="/" element={<Home />} />
        <Route path="/user/addaddress" element={<AddAddress/>}/>
         <Route path="/login" element={<Login />} />
