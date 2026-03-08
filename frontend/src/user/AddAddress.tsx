@@ -61,7 +61,8 @@ const AddAddress = () => {
           background:"#fff",
           padding:"30px",
           borderRadius:"10px",
-          width:"400px",
+          maxWidth:"400px",
+          width:"100%",
           boxShadow:"0 5px 20px rgba(0,0,0,0.1)"
         }}
       >
