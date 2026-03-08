@@ -50,11 +50,14 @@ const Navbar = () => {
             <input type='text' value={input}
             onChange={(e)=>setInput(e.target.value)}
             placeholder='Search bar'
-            onFocus={()=>setShowres(true)}/>
+            onFocus={()=>setShowres(true)}
+            onBlur={()=>setTimeout(()=>setShowres(false),200)}/>
             {showres && (
-              <div>
+              <div className="search-results">
+                {product.length === 0 && <p>No results</p>}
+                
                 {product.map((p)=>
-                <span key={p.id}>{p.name}</span>)}
+                <Link key={p.id} to={`/product/${p.id}`}>{p.name}</Link>)}
                 </div>
             )}
             </div>

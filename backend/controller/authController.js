@@ -181,3 +181,17 @@ export const adminLogin = async (req, res) => {
 
   return res.status(200).json({message: "Admin logged in",admin: { id: admin.id, name: admin.name, email: admin.email }});
 };
+
+export const logout=async(req,res)=>{
+    res.clearCookie("token",{
+        httpOnly:true,
+        sameSite:"lax",
+        secure:false
+    })
+    res.clearCookie("refreshToken",{
+        httpOnly:true,
+        sameSite:"lax",
+        secure:false
+    })
+    return res.status(200).json({message:"Logged out successfully"})
+}

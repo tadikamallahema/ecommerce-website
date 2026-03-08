@@ -12,7 +12,10 @@ import orderRoutes from './routes/orderRoutes.js';
 import paymentRouter from './routes/paymentRoutes.js';
 import { searchInput } from './controller/productController.js';
 import { verifyEmail } from './controller/emailController.js';
+import addressRoute from './routes/addressRoute.js';
 import { logout } from './controller/authController.js';
+
+//import { logout } from './controller/authController.js';
 /* import { alterUserTable, createUserTable } from './models/userModel.js';
 import { alterUserTable2, createUserTable } from './models/userModel.js';
 import createPaymentTable from './models/paymentModel.js';
@@ -59,6 +62,7 @@ app.use('/api/orders',orderRoutes);
 app.use('/api/pay',paymentRouter);
 app.use('/api/address',addressRoute);
 app.get('/api/search',searchInput);
+app.post('/api/logout',logout);
 app.get('/api/verify-email/:token',verifyEmail);
 app.listen(port ,()=>{
     console.log(`Server is runnin on ${port}`);
