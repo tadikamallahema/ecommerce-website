@@ -69,12 +69,13 @@ const OrderHistory = () => {
 };
 
 export default OrderHistory; */
-
 import axios from "axios";
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import UserDashboard from "./UserDashboard";
+import { useNavigate } from "react-router-dom";
 
 interface OrderItem {
+  product_id: number;
   product_name: string;
   image: string;
   quantity: number;
@@ -93,6 +94,8 @@ const OrderHistory = () => {
 
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchOrderHistory();
@@ -120,9 +123,11 @@ const OrderHistory = () => {
   if (loading) return <p>Loading order history...</p>;
 
   return (
-    <div style={{ padding: "40px", background:"#f5f5f5", minHeight:"100vh" }}>
-
+<div>
+  
       <UserDashboard/>
+      <div style={{ padding: "40px", background:"#f5f5f5", minHeight:"100vh" }}>
+
 
       <h2 style={{marginTop:"20px"}}>My Orders</h2>
 
@@ -145,18 +150,23 @@ const OrderHistory = () => {
               }}
             >
 
-              {/* Order header */}
+              {/* Order Header */}
 
               <div style={{
                 display:"flex",
                 justifyContent:"space-between",
                 marginBottom:"15px"
               }}>
+
                 <strong>Order #{order.id}</strong>
 
-                <span style={{color:"green",fontWeight:"bold"}}>
+                <span style={{
+                  color: order.status === "paid" ? "green" : "orange",
+                  fontWeight:"bold"
+                }}>
                   {order.status}
                 </span>
+
               </div>
 
               <p style={{color:"#777"}}>
@@ -165,54 +175,91 @@ const OrderHistory = () => {
 
               <hr style={{margin:"15px 0"}}/>
 
-              {/* Order items */}
+              {/* Order Items */}
 
-              {order.items.map((item,i)=>(
+              {order.items?.map((item,i)=>(
                 <div
                   key={i}
                   style={{
                     display:"flex",
+                    justifyContent:"space-between",
+                    alignItems:"center",
                     gap:"20px",
                     marginBottom:"15px"
                   }}
                 >
 
-                  <img
-                    src={item.image}
-                    alt={item.product_name}
-                    style={{
-                      width:"80px",
-                      height:"80px",
-                      objectFit:"cover",
-                      borderRadius:"8px"
-                    }}
-                  />
+                  <div style={{display:"flex",gap:"20px",alignItems:"center"}}>
 
-                  <div>
+                    <img
+                      src={item.image || "https://via.placeholder.com/80"}
+                      alt={item.product_name}
+                      style={{
+                        width:"80px",
+                        height:"80px",
+                        objectFit:"cover",
+                        borderRadius:"8px"
+                      }}
+                    />
 
-                    <p style={{margin:0,fontWeight:"bold"}}>
-                      {item.product_name}
-                    </p>
+                    <div>
 
-                    <p style={{margin:0,color:"#777"}}>
-                      Qty: {item.quantity}
-                    </p>
+                      <p style={{margin:0,fontWeight:"bold"}}>
+                        {item.product_name}
+                      </p>
 
-                    <p style={{margin:0}}>
-                      ₹{item.price_at_time}
-                    </p>
+                      <p style={{margin:0,color:"#777"}}>
+                        Qty: {item.quantity}
+                      </p>
+
+                      <p style={{margin:0}}>
+                        ₹{item.price_at_time}
+                      </p>
+
+                    </div>
 
                   </div>
+
+                  {/* Review Button */}
+
+                  {order.status === "paid" && (
+
+                    <button
+                      onClick={()=>navigate(`/product/${item.product_id}/reviews`)}
+                      style={{
+                        padding:"8px 16px",
+                        borderRadius:"6px",
+                        border:"none",
+                        background:"linear-gradient(135deg,#ff6a5e,#ff3d3d)",
+                        color:"#fff",
+                        fontWeight:"bold",
+                        cursor:"pointer",
+                        transition:"0.2s"
+                      }}
+                      onMouseOver={(e)=>{
+                        e.currentTarget.style.transform = "scale(1.05)";
+                      }}
+                      onMouseOut={(e)=>{
+                        e.currentTarget.style.transform = "scale(1)";
+                      }}
+                    >
+                      Write Review
+                    </button>
+
+                  )}
 
                 </div>
               ))}
 
               <hr/>
 
+              {/* Total */}
+
               <div style={{
                 display:"flex",
                 justifyContent:"space-between",
-                fontWeight:"bold"
+                fontWeight:"bold",
+                fontSize:"16px"
               }}>
                 <span>Total</span>
                 <span>₹{order.total_amount}</span>
@@ -227,6 +274,7 @@ const OrderHistory = () => {
       )}
 
     </div>
+</div>
   );
 };
 
