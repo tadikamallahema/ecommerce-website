@@ -24,7 +24,7 @@ export const userRegister=async(req,res)=>{
 
     await createUser(name,phone_number,email,hashed,token,expiry);
 
-    const verifyLink=`http://localhost:2007/api/verify-email/${token}`;
+    const verifyLink=`http://localhost:5173/verifyemail/${token}`;
     const emailHTML = `
       <h2>Verify Your Account</h2>
       <p>Please click the button below to verify your email.</p>

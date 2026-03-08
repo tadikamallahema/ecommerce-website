@@ -63,7 +63,7 @@ app.use('/api/pay',paymentRouter);
 app.use('/api/address',addressRoute);
 app.get('/api/search',searchInput);
 app.post('/api/logout',logout);
-app.get('/api/verify-email/:token',verifyEmail);
+app.get('/api/verifyemail/:token',verifyEmail);
 app.listen(port ,()=>{
     console.log(`Server is runnin on ${port}`);
 })
