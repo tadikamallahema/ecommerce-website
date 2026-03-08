@@ -8,7 +8,7 @@ interface Product {
   name: string;
   price: number;                 
   discount_price?: number | null; 
-  image_url?: string;
+  main_image?: string;
 }
 
 const CategoryProducts = () => {
@@ -76,7 +76,7 @@ const CategoryProducts = () => {
             key={p.id}
             style={{border: "1px solid #ddd",borderRadius: "12px",  padding: "12px",}}>
             <img
-              src={p.image_url}
+              src={p.main_image}
               alt={p.name}
               style={{
                 width: "100%",
@@ -133,7 +133,7 @@ export default CategoryProducts; */
 
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import UserDashboard from "./UserDashboard";
 
 interface Product {
@@ -141,7 +141,7 @@ interface Product {
   name: string;
   price: number;
   discount_price?: number | null;
-  image_url?: string;
+  main_image?: string;
 }
 
 const CategoryProducts = () => {
@@ -245,11 +245,9 @@ const CategoryProducts = () => {
                   height: "220px",
                 }}
               >
+                <Link to={`/product/${p.id}`}>
                 <img
-                  src={
-                    p.image_url ||
-                    "https://via.placeholder.com/400x300?text=No+Image"
-                  }
+                  src={p.main_image ||"https://via.placeholder.com/400x300?text=No+Image"}
                   alt={p.name}
                   style={{
                     width: "100%",
@@ -265,6 +263,7 @@ const CategoryProducts = () => {
                   }
                 />
 
+                </Link>
                 {/* Discount Badge */}
                 {p.discount_price && p.discount_price < p.price && (
                   <div

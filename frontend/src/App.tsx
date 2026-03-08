@@ -26,6 +26,8 @@ import CreateProduct from "./vendor/CreateProduct.tsx";
 import CheckEmail from "./user/CheckEmail.tsx";
 import VerifyEmail from "./user/VerifyEmail.tsx";
 import AddAddress from "./user/AddAddress.tsx";
+import ReviewPage from "./user/ReviewPage.tsx";
+import ProductPage from "./user/ProductPage.tsx";
 
 
 function App() {
@@ -33,6 +35,8 @@ function App() {
   return (
     <>
       <Routes>
+        <Route path="/product/:productId" element={<ProductPage />} />
+        <Route path="product/:productId/reviews" element={<ReviewPage/>}/>
         <Route path="/user/categories" element={<ViewCategories/>}/>
         {/* <Route path="/category/:id" element={<CategoryProducts />} /> */}
         <Route path="/checkemail" element={<CheckEmail/>}/>

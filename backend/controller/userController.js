@@ -78,3 +78,15 @@ export const getAllProductsByCategory=async(req,res)=>{
     return res.status(500).json({ success: false, message: err.message });
   }
 }
+export const getProductById=async(req,res)=>{
+  try{
+    const {productId}=req.params;
+    if(!productId){
+    return res.status(400).json({success:false,message:"No product is found "});
+  }
+  const product=await getProductByIdAcc(productId);
+  return res.status(200).json({success:true,message:"product found","product":product})
+  }catch(err){
+    return res.status(500).json({success:false,message:err.message});
+  }
+}

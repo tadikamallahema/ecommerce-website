@@ -140,6 +140,7 @@ export const getUserOrderHistory = async (req, res) => {
     return res.status(200).json({success: true,orders: successfulOrders,});
   } catch (err) {
     console.error(err);
+    console.log(err);
     return res.status(500).json({success: false,message: err.message,});
   }
 };

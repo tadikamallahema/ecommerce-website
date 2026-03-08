@@ -14,6 +14,9 @@ import { searchInput } from './controller/productController.js';
 import { verifyEmail } from './controller/emailController.js';
 import addressRoute from './routes/addressRoute.js';
 import { logout } from './controller/authController.js';
+import reviewRouter from './routes/reviewRoutes.js';
+import { createReviewTable } from './models/reviewModel.js';
+import { getProductById } from './controller/userController.js';
 
 //import { logout } from './controller/authController.js';
 /* import { alterUserTable, createUserTable } from './models/userModel.js';
@@ -52,6 +55,7 @@ await createOrderItemsTable(); */
 //await createPaymentTable();
 /* await alterUserTable2(); */
 //await createAddressTable();
+await createReviewTable();
 app.use('/api',authRoutes);
 app.use('/api/img',imageUpload);
 app.use('/api/admin',adminRoutes);
@@ -61,9 +65,11 @@ app.use('/api/cart',cartRoutes);
 app.use('/api/orders',orderRoutes);
 app.use('/api/pay',paymentRouter);
 app.use('/api/address',addressRoute);
+app.use('/api/r',reviewRouter);
 app.get('/api/search',searchInput);
 app.post('/api/logout',logout);
 app.get('/api/verifyemail/:token',verifyEmail);
+app.get('/api/product/:productId',getProductById);
 app.listen(port ,()=>{
     console.log(`Server is runnin on ${port}`);
 })
