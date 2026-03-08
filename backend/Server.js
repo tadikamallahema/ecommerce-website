@@ -12,9 +12,11 @@ import orderRoutes from './routes/orderRoutes.js';
 import paymentRouter from './routes/paymentRoutes.js';
 import createPaymentTable from './models/paymentModel.js';
 import { searchInput } from './controller/productController.js';
-import { alterUserTable2 } from './models/userModel.js';
+import { alterUserTable2, createUserTable } from './models/userModel.js';
 import { verifyEmail } from './controller/emailController.js';
 import { logout } from './controller/authController.js';
+import addressRoute from './routes/addressRoute.js';
+import { createAddressTable } from './models/addressModel.js';
 /* import { alterUserTable, createUserTable } from './models/userModel.js';
 import { alterVendorTable, createVendorTable } from './models/vendorModel.js';
 import createAdminTable from './models/adminModel.js';
@@ -35,8 +37,8 @@ app.use(cors({
     origin:'http://localhost:5173',
     credentials:true
 }));
-/* await createUserTable();
-await createVendorTable();
+ await createUserTable();
+/*await createVendorTable();
 //await alterUserTable();
 //await alterVendorTable();
 await createAdminTable();
@@ -48,6 +50,7 @@ await createOrderTable();
 await createOrderItemsTable(); */
 //await createPaymentTable();
 /* await alterUserTable2(); */
+await createAddressTable();
 app.use('/api',authRoutes);
 app.use('/api/img',imageUpload);
 app.use('/api/admin',adminRoutes);
@@ -56,6 +59,7 @@ app.use('/api/user',userRouter);
 app.use('/api/cart',cartRoutes);
 app.use('/api/orders',orderRoutes);
 app.use('/api/pay',paymentRouter);
+app.use('/api/address',addressRoute);
 app.get('/api/search',searchInput);
 app.post('/api/logout',logout);
 app.get('/api/verifyemail/:token',verifyEmail);

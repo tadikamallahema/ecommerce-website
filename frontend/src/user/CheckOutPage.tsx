@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import UserDashboard from "./UserDashboard";
 
 interface CheckoutItem {
   product_id: number;
@@ -9,17 +10,47 @@ interface CheckoutItem {
   price_at_time: number;
 }
 
+interface Address {
+  id: number;
+  full_name: string;
+  phone: string;
+  address_line: string;
+  city: string;
+  state: string;
+  pincode: string;
+}
+
 const CheckOutPage = () => {
   const [items, setItems] = useState<CheckoutItem[]>([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [addresses,setAddresses] = useState<Address[]>([]);
+  const [selectedAddress,setSelectedAddress] = useState<number | null>(null);
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchCheckout();
+    fetchAddresses();
   }, []);
+  const fetchAddresses = async () => {
+  try {
+    const res = await axios.get(
+      "http://localhost:2007/api/address/my",
+      { withCredentials: true }
+    );
+
+    setAddresses(res.data.address);
+
+    if (res.data.address.length > 0) {
+      setSelectedAddress(res.data.address[0].id);
+    }
+
+  } catch (err) {
+    console.log(err);
+  }
+};
 
   const fetchCheckout = async () => {
     try {
@@ -73,7 +104,7 @@ const CheckOutPage = () => {
     // 1️⃣ Place Order (status should remain pending)
     const orderRes = await axios.post(
       "http://localhost:2007/api/orders/placeorder",
-      {},
+      {address_id: selectedAddress},
       { withCredentials: true }
     );
 
@@ -136,38 +167,11 @@ const CheckOutPage = () => {
 
   if (loading) return <p>Loading checkout...</p>;
   if (error) return <p>{error}</p>;
-/* 
+
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>Checkout</h2>
-
-      {items.length === 0 && (
-        <p>Your cart is empty. Go back to cart.</p>
-      )}
-
-      {items.map(item => (
-        <div key={item.product_id}>
-          <p>
-            {item.name} × {item.quantity} = ₹
-            {item.price_at_time * item.quantity}
-          </p>
-        </div>
-      ))}
-
-      <hr />
-
-      <h3>Total Payable: ₹{total}</h3>
-
-      <button
-        onClick={handlePay}
-        disabled={total <= 0}
-      >
-        Pay ₹{total}
-      </button>
-    </div>
-  ); */
-  return (
-  <div
+  <div>
+    <UserDashboard/>
+    <div
     style={{
       padding: "40px",
       background: "#f5f5f5",
@@ -313,6 +317,66 @@ const CheckOutPage = () => {
         </div>
       </div>
     )}
+    {/* ADDRESS SECTION */}
+
+<div
+  style={{
+    background:"#fff",
+    padding:"25px",
+    borderRadius:"12px",
+    boxShadow:"0 5px 20px rgba(0,0,0,0.05)",
+    marginBottom:"20px"
+  }}
+>
+  <h3>Select Delivery Address</h3>
+
+  {addresses.length === 0 && (
+    <p>No address found</p>
+  )}
+
+  {addresses.map(addr => (
+
+    <div
+      key={addr.id}
+      onClick={()=>setSelectedAddress(addr.id)}
+      style={{
+        border:selectedAddress===addr.id
+          ? "2px solid red"
+          : "1px solid #ddd",
+        borderRadius:"8px",
+        padding:"12px",
+        marginTop:"10px",
+        cursor:"pointer"
+      }}
+    >
+      <p style={{margin:0,fontWeight:"bold"}}>
+        {addr.full_name} ({addr.phone})
+      </p>
+
+      <p style={{margin:0}}>
+        {addr.address_line}, {addr.city}, {addr.state} - {addr.pincode}
+      </p>
+
+    </div>
+
+  ))}
+
+  <button
+    style={{
+      marginTop:"10px",
+      padding:"8px 14px",
+      borderRadius:"6px",
+      border:"none",
+      background:"#333",
+      color:"#fff",
+      cursor:"pointer"
+    }}
+    onClick={()=>navigate("/user/addaddress")}
+  >
+    + Add Address
+  </button>
+</div>
+  </div>
   </div>
 );
 };

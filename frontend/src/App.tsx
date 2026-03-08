@@ -25,6 +25,7 @@ import OrderHistory from "./user/OrderHistory.tsx";
 import CreateProduct from "./vendor/CreateProduct.tsx";
 import CheckEmail from "./user/CheckEmail.tsx";
 import VerifyEmail from "./user/VerifyEmail.tsx";
+import AddAddress from "./user/AddAddress.tsx";
 function App() {
   
   return (
@@ -36,7 +37,7 @@ function App() {
         <Route path="/checkemail" element={<CheckEmail/>}/>
         <Route path="/verifyemail/:token" element={<VerifyEmail/>}/>
         <Route path="/" element={<Home />} />
-       
+       <Route path="/user/addaddress" element={<AddAddress/>}/>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<SignUp />} />
 

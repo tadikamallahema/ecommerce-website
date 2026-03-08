@@ -134,7 +134,7 @@ export const getUserOrderHistory = async (req, res) => {
     const orders = await getUserOrders(userId); 
 
     const successfulOrders = orders.filter(
-      (order) => order.status === "paid"
+      (order) => order.status === "paid" || order.status==='pending'
     );
 
     return res.status(200).json({success: true,orders: successfulOrders,});
