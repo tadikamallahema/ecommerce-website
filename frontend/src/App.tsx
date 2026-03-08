@@ -23,19 +23,22 @@ import CheckOutPage from "./user/CheckOutPage.tsx";
 import Profile from "./user/Profile.tsx";
 import OrderHistory from "./user/OrderHistory.tsx";
 import CreateProduct from "./vendor/CreateProduct.tsx";
+<<<<<<< HEAD
 import CheckEmail from "./user/CheckEmail.tsx";
 import VerifyEmail from "./user/VerifyEmail.tsx";
 import AddAddress from "./user/AddAddress.tsx";
+=======
+
+
+>>>>>>> a0c4a9f (backup)
 function App() {
   
   return (
     <>
-
       <Routes>
         <Route path="/user/categories" element={<ViewCategories/>}/>
         {/* <Route path="/category/:id" element={<CategoryProducts />} /> */}
-        <Route path="/checkemail" element={<CheckEmail/>}/>
-        <Route path="/verifyemail/:token" element={<VerifyEmail/>}/>
+        
         <Route path="/" element={<Home />} />
        <Route path="/user/addaddress" element={<AddAddress/>}/>
         <Route path="/login" element={<Login />} />

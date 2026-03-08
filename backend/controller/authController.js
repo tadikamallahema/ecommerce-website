@@ -22,25 +22,25 @@ export const userRegister=async(req,res)=>{
     const expiry= new Date(Date.now()+24*60*60*1000);
 
 
-    
-    const verifyLink=`http://localhost:5173/verifyemail/${token}`;
+    await createUser(name,phone_number,email,hashed,token,expiry);
+
+    const verifyLink=`http://localhost:2007/api/verify-email/${token}`;
     const emailHTML = `
-    <h2>Verify Your Account</h2>
-    <p>Please click the button below to verify your email.</p>
-    
-    <a href="${verifyLink}" 
-    style="padding:10px 20px;background:#4CAF50;color:white;text-decoration:none;border-radius:5px;">
-    Verify Email
+      <h2>Verify Your Account</h2>
+      <p>Please click the button below to verify your email.</p>
+
+      <a href="${verifyLink}" 
+         style="padding:10px 20px;background:#4CAF50;color:white;text-decoration:none;border-radius:5px;">
+         Verify Email
       </a>
-      
+
       <p>If the button doesn't work, copy this link:</p>
       <p>${verifyLink}</p>
-      `;
-      try{
-          await sendEmail(email,"Verify your account ",emailHTML);
-        }catch(err){ console.log("Email sending failed",err.message);}
-        await createUser(name,phone_number,email,hashed,token,expiry);
-        return res.status(201).json({message:"User registered,Please verify your email"}, );
+    `;
+    try{
+    await sendEmail(email,"Verify your account ",emailHTML);
+    }catch(err){ console.log("Email sending failed",err.message);}
+    return res.status(201).json({message:"User registered,.Please verify your email"}, );
     }catch(err){
         console.log(err);
         return res.status(500).json({message:err.message});
@@ -56,9 +56,6 @@ export const userLogin=async(req,res)=>{
         const user=await getUserByEmail(email);
         if(!user){
             return res.status(404).json({message:"User doesn't exists"});
-        }
-        if(!user.is_email_verified){
-            return res.status(404).json({message:"User is not verified , so please verify"});
         }
         const valid=await bcrypt.compare(password,user.password);
         if(!valid){
@@ -81,7 +78,6 @@ export const userLogin=async(req,res)=>{
         })
         return res.status(200).json({message:"User LoggedIn successfully and token is stored in cookies",user});
     }catch(err){
-        console.log(err);
         return res.status(500).json({message:err.message});
     }
 }
@@ -185,17 +181,3 @@ export const adminLogin = async (req, res) => {
 
   return res.status(200).json({message: "Admin logged in",admin: { id: admin.id, name: admin.name, email: admin.email }});
 };
-
-export const logout=async(req,res)=>{
-    res.clearCookie("token",{
-        httpOnly:true,
-        sameSite:"lax",
-        secure:false
-    })
-    res.clearCookie("refreshToken",{
-        httpOnly:true,
-        sameSite:"lax",
-        secure:false
-    })
-    return res.status(200).json({message:"Logged out successfully"})
-}

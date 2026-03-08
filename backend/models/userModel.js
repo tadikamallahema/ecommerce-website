@@ -62,7 +62,7 @@ export const createUser = async (
 
 export const getUserByEmail=async(email)=>{
     const [row]=await db.execute(
-        `select * from users where email=? and is_active=true `,[email]
+        `select * from users where email=? and is_active=true`,[email]
     );
     return row[0];
 }

@@ -110,7 +110,7 @@ const SignUp = () => {
 
       alert("Registration Successful");
       console.log(res.data);
-      navigate("/checkemail");
+      navigate("/login");
     } catch (err: any) {
       alert(err.response?.data?.message || "Registration Failed");
     } finally {
