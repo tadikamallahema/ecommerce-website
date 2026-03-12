@@ -1,7 +1,7 @@
 //usercontroller -get allproducts ,  get products by id 
 // , sort ,getProductsByCategory
 
-import { filterProduct, getAllProducts, getProductByIdAcc, getProductsByCategory, sortProducts } from "../models/productModel.js";
+import { filterProduct, getAllProducts, getProductByIdAcc, getProductCountByCategory, getProductsByCategory, sortProducts } from "../models/productModel.js";
 import { getUserById } from "../models/userModel.js";
 
 export const getUserByUserId=async(req,res)=>{
@@ -68,13 +68,26 @@ export const userSortProducts=async(req,res)=>{
 }
 export const getAllProductsByCategory=async(req,res)=>{
   const {categoryId}=req.params;
+  //pagination related paramters 
+  const page=parseInt(req.query.page)||1;
+  const limit=parseInt(req.query.limit)||2;
+  const offset=(page-1)*limit;
   if(!categoryId){
     return res.status(400).json({success:false,message:"No product is found "});
   }
   try{
-    const products=await getProductsByCategory(categoryId);
-    return res.status(200).json({success:true,message:`List of products of category ${categoryId}`,count:products.length,"products":products})
+     /* const products=await getProductsByCategory(categoryId);  */
+    const products = await getProductsByCategory(categoryId, limit, offset);
+
+    // total products count
+    const totalProducts = await getProductCountByCategory(categoryId);
+    const totalPages = Math.ceil(totalProducts / limit);
+    /* console.log(totalProducts,+"",totalPages); */
+    
+    return res.status(200).json({success:true,message:`List of products of category ${categoryId}`,
+      currentPage:page,totalPages,totalProducts,"products":products})
   }catch (err) {
+    console.log(err);
     return res.status(500).json({ success: false, message: err.message });
   }
 }

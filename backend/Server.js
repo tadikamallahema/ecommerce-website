@@ -19,10 +19,10 @@ import { createReviewTable } from './models/reviewModel.js';
 import { getProductById } from './controller/userController.js';
 
 //import { logout } from './controller/authController.js';
-/* import { alterUserTable, createUserTable } from './models/userModel.js';
-import { alterUserTable2, createUserTable } from './models/userModel.js';
+import { /* alterUserTable, */ createUserTable } from './models/userModel.js';
+//import { alterUserTable2, createUserTable } from './models/userModel.js';
 import createPaymentTable from './models/paymentModel.js';
-import { alterVendorTable, createVendorTable } from './models/vendorModel.js';
+import { /* alterVendorTable, */ createVendorTable } from './models/vendorModel.js';
 import createAdminTable from './models/adminModel.js';
 import createCategoryTable from './models/categoryModel.js';
 import createProductTable from './models/productModel.js';
@@ -30,7 +30,7 @@ import createCartTable from './models/cartModel.js';
 import createCartItemTable from './models/cartItemsModel.js';
 import { createOrderTable } from './models/orderModel.js';
 import { createOrderItemsTable } from './models/orderItemsModel.js';
- */
+
 dotenv.config();
 
 const app=express();
@@ -41,8 +41,8 @@ app.use(cors({
     origin:'http://localhost:5173',
     credentials:true
 }));
- //await createUserTable();
-/*await createVendorTable();
+await createUserTable();
+await createVendorTable();
 //await alterUserTable();
 //await alterVendorTable();
 await createAdminTable();
@@ -51,8 +51,8 @@ await createProductTable();
 await createCartTable();
 await createCartItemTable();
 await createOrderTable();
-await createOrderItemsTable(); */
-//await createPaymentTable();
+await createOrderItemsTable(); 
+await createPaymentTable();
 /* await alterUserTable2(); */
 //await createAddressTable();
 await createReviewTable();

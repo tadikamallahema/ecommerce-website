@@ -76,12 +76,28 @@ export const deleteProduct=async(product_id,vendor_id)=>{
     );
     return res;
 }
-export const getProductsByCategory=async(category_id)=>{
+/* export const getProductsByCategory=async(category_id)=>{
     const [res]=await db.execute(
         `select * from product where category_id=? and is_active=1`,[category_id]
     );
     return res;
+} */
+export const getProductsByCategory=async(category_id,limit,offset)=>{
+    const [res]=await db.execute(
+        `select * from product where category_id=? and is_active=1 
+        LIMIT ${Number(limit)} OFFSET ${Number(offset)}`
+        ,[category_id]
+    );
+    return res;
 }
+export const getProductCountByCategory = async (categoryId) => {
+  const [rows] = await db.query(
+    "SELECT COUNT(*) as total FROM product WHERE category_id = ?",
+    [categoryId]
+  );
+
+  return rows[0].total;
+};
 
 export const getProductsByVendor=async(vendor_id)=>{
     const [res]=await db.execute(
