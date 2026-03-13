@@ -132,6 +132,12 @@ const Login = () => {
               Sign Up
             </Link>
           </p>
+          <p style={{ fontSize: "14px", marginTop: "10px" }}>
+            ForgetPassword?{" "}
+            <Link to="/forgetPass" style={{ color: "#F86F03", fontWeight: "bold" }}>
+              forget password
+            </Link>
+          </p>
 
           <button type="submit" disabled={loading}>
             {loading ? "Logging in..." : "Login"}

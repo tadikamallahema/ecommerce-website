@@ -28,6 +28,8 @@ import VerifyEmail from "./user/VerifyEmail.tsx";
 import AddAddress from "./user/AddAddress.tsx";
 import ReviewPage from "./user/ReviewPage.tsx";
 import ProductPage from "./user/ProductPage.tsx";
+import ForgetPassword from "./user/ForgetPassword.tsx";
+import ResetPassword from "./user/ResetPassoword.tsx";
 
 
 function App() {
@@ -41,6 +43,8 @@ function App() {
         {/* <Route path="/category/:id" element={<CategoryProducts />} /> */}
         <Route path="/checkemail" element={<CheckEmail/>}/>
         <Route path="/verifyemail/:token" element={<VerifyEmail/>}/>
+        <Route path="/forgetPass" element={<ForgetPassword/>}/>
+        <Route path="/resetpass" element={<ResetPassword/>}/>
         <Route path="/" element={<Home />} />
        <Route path="/user/addaddress" element={<AddAddress/>}/>
         <Route path="/login" element={<Login />} />

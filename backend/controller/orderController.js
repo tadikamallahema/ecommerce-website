@@ -69,7 +69,7 @@ export const placeOrder = async (req, res) => {
     //await removeCartItems(cart.id);
     return res.status(201).json({ success: true, message: "Order Created.Awaiting payment ", orderId });
   } catch (err) {
-    console.error("placeOrder error:", err.message);
+    //console.error("placeOrder error:", err.message);
     return res.status(500).json({ message: err.message });
   }
 };

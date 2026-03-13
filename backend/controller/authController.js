@@ -5,6 +5,7 @@ import { createVendor, getVByEmail } from "../models/vendorModel.js";
 import { createAdmin, getAdminByEmail } from "../models/adminModel.js";
 import crypto from "crypto";
 import { sendEmail } from "../config/email.js";
+import db from "../config/db.js";
 
 export const userRegister=async(req,res)=>{
     try{
@@ -76,7 +77,7 @@ export const userLogin=async(req,res)=>{
             sameSite:"lax",
             maxAge:1*24*60*60*1000      //1 day
         })
-        return res.status(200).json({message:"User LoggedIn successfully and token is stored in cookies",user});
+        return res.status(200).json({message:"User LoggedIn successfully and token is stored in cookies"});
     }catch(err){
         return res.status(500).json({message:err.message});
     }
@@ -194,4 +195,25 @@ export const logout=async(req,res)=>{
         secure:false
     })
     return res.status(200).json({message:"Logged out successfully"})
+}
+
+export const verifyEmail=async(req,res)=>{
+    const {email}=req.body;
+    //console.log(email);
+    const user=await getUserByEmail(email);
+    //console.log(user);
+    if(user.length===0){
+        return res.status(404).json({ message: "Email not found" });
+    }
+    res.json({ message: "Email exists" });
+}
+
+export const resetPassword=async(req,res)=>{
+    const {email,password}=req.body;
+    const hash=await bcrypt.hash(password,10);
+    await db.execute(
+        `update users set password=? where email=?`,
+        [hash,email]
+    );
+    res.json({message:"Password updated successfully"})
 }

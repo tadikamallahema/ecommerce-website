@@ -1,5 +1,5 @@
 import express from 'express';
-import { adminLogin, userLogin, userRegister, vendorLogin, vendorRegistration } from '../controller/authController.js';
+import { adminLogin, resetPassword, userLogin, userRegister, vendorLogin, vendorRegistration, verifyEmail } from '../controller/authController.js';
 import authMiddleware, { refreshAccessToken } from '../middleware/authMiddleware.js'
 import rateLimit from 'express-rate-limit';
 const authRoutes=express.Router();
@@ -23,6 +23,8 @@ authRoutes.post('/vlogin',authRateLimiter,vendorLogin);
 
 //authRoutes.post('/areg',adminRegister);
 authRoutes.post('/alog',adminLogin);
+authRoutes.post('/checkmail',verifyEmail);
+authRoutes.post('/resetpass',resetPassword);
 
 authRoutes.get("/check", authMiddleware, (req, res) => {
   return res.status(200).json({
