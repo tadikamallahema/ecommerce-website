@@ -70,9 +70,9 @@ export const getProductByIdAcc=async(id)=>{
     );
     return res[0];
 }
-export const deleteProduct=async(product_id,vendor_id)=>{
+export const deleteProduct=async(product_id)=>{
     const [res]=await db.execute(
-        `update product set is_active=0 where id=? and vendor_id=?`,[product_id,vendor_id]
+        `update product set is_active=0 where id=? `,[product_id]
     );
     return res;
 }
@@ -101,7 +101,7 @@ export const getProductCountByCategory = async (categoryId) => {
 
 export const getProductsByVendor=async(vendor_id)=>{
     const [res]=await db.execute(
-        `select * from product where vendor_id=?`,[vendor_id]
+        `select * from product where vendor_id=? and is_active=1`,[vendor_id]
     );
     return res;
 }

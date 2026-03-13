@@ -1,4 +1,4 @@
-import { searchProduct } from "../models/productModel.js";
+import { searchProduct, updateProduct } from "../models/productModel.js";
 
 //const imageUrl = req.body.imageUrl;
 
@@ -21,3 +21,22 @@ export const searchInput=async(req,res)=>{
     return res.status(500).json({success:false,message:err.message});
   }
 }
+
+export const updateProductController = async (req, res) => {
+
+  const { productId } = req.params;
+
+  const {name,slug,sku,price,discount_price,stock_quantity,description,main_image,category_id} = req.body;
+  try {
+    const result = await updateProduct(productId,name,slug,sku,price,discount_price,stock_quantity,description,main_image,category_id);
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({success: false,message: "Product not found or inactive"});
+    }
+    return res.status(200).json({success: true,message: "Product updated successfully"});
+
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({success: false,message: err.message});
+  }
+};

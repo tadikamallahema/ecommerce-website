@@ -14,7 +14,7 @@ adminRoutes.get('/pendingvendors',getPendingVendorsToApprove);
 adminRoutes.get('/pendingproducts',getPendingProductsToApprove);
 adminRoutes.post('/createcategory',createCategoryA);
 adminRoutes.delete('/deletecategory/:categoryId',AdminDeleteCategory);
-adminRoutes.delete('/deleteproduct/:productId',AdminDeleteProduct);
+
 adminRoutes.get('/getAllproducts',getAllProductsBA);
 adminRoutes.put('/updatecatstatus/:categoryId',changeCategoryStatus);
 adminRoutes.put('/updateprodstatus/:productId',changeProductStatus);

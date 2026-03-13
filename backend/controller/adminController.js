@@ -158,11 +158,12 @@ export const AdminDeleteProduct=async(req,res)=>{
   try{
     const product=await getProductByIdAcc(productId);
     if(!product){
-      return res.status(400).json({success:false,message:"No product is found "});
+      return res.status(404).json({success:false,message:"No product is found "});
     }
     await deleteProduct(productId);
     return res.status(200).json({success:true,message: "Product deleted successfully" });
   }catch(err){
+    console.log(err);
     return res.status(500).json({success:false,message:err.message});
   }
 }

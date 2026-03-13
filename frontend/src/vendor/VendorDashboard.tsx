@@ -11,6 +11,7 @@ const VendorDashboard = () => {
           <li><Link to="/vendor/login">Vendor Login </Link></li>
           <li><Link to="/vendor/products">Products</Link></li>
           <li><Link to="/vendor/createproduct">Create Product</Link></li>
+          <li><Link to="/vendor/manageprod">Manage Product</Link></li>
         </ul>
       </nav>
     </div>

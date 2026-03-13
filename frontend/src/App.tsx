@@ -30,6 +30,7 @@ import ReviewPage from "./user/ReviewPage.tsx";
 import ProductPage from "./user/ProductPage.tsx";
 import ForgetPassword from "./user/ForgetPassword.tsx";
 import ResetPassword from "./user/ResetPassoword.tsx";
+import ManageProducts from "./vendor/ManageProducts.tsx";
 
 
 function App() {
@@ -177,6 +178,7 @@ function App() {
             </ProtectedRoutes>
           }
         />
+        <Route path="/vendor/manageprod" element={<ManageProducts/>}/>
       </Routes>
     </>
   )
