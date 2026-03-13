@@ -36,7 +36,12 @@ export const addToCart=async(req,res)=>{
         }
         const product = await getProductByIdAcc(productId);
         if (!product) {
-            return res.status(404).json({ success: false, message: "Product not found or unavailable" });
+          return res.status(404).json({ success: false, message: "Product not found or unavailable" });
+        }
+        //console.log(product);
+        //console.log(product.stock_quantity);
+        if(product.stock_quantity === 0){
+          return res.status(400).json({message:"Product out of stock"})
         }
         const price = product.discount_price ?? product.price;
 
@@ -47,10 +52,14 @@ export const addToCart=async(req,res)=>{
         }
 
         await addItemToCart(cart.id, productId, quantity, price);
-        return res.status(200).json({ success: true, message: "Item added to cart" });
+        return res.status(200).json({ success: true, message: "Item added to cart" ,product:{ id:product.id,
+          name:product.name,
+          price:product.price,
+          stock:product.stock
+        }});
 
     } catch (err) {
-      console.log(err);
+      //console.log(err);
         return res.status(500).json({ success: false, message: err.message });
     }
 };

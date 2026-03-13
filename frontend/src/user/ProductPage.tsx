@@ -8,6 +8,7 @@ interface Product {
   price: number;
   discount_price?: number | null;
   main_image?: string;
+  stock_quantity: number; 
 }
 
 const ProductPage = () => {
@@ -35,31 +36,36 @@ const ProductPage = () => {
     return product.price;
   };
 
- const addToCart = async () => {
+const addToCart = async () => {
+  console.log(product?.stock_quantity === 0);
+  if (product?.stock_quantity === 0) {
+    alert("Product is out of stock_quantity");
+    return;
+  }
 
-    try {
+  try {
 
-      await axios.post(
-        "http://localhost:2007/api/cart/add",
-        {
-          productId: product.id,
-          quantity: 1,
-          price: getFinalPrice(product),
-        },
-        { withCredentials: true }
-      );
+    await axios.post(
+      "http://localhost:2007/api/cart/add",
+      {
+        productId: product.id,
+        quantity: 1,
+        price: getFinalPrice(product),
+      },
+      { withCredentials: true }
+    );
 
-      alert("Added to cart");
-      navigate("/user/cart");
+    alert("Added to cart");
+    navigate("/user/cart");
 
-    } catch (err:any) {
+  } catch (err:any) {
 
-      alert("Please login first");
-      navigate("/login");
+    alert("Please login first");
+    navigate("/login");
 
-    }
+  }
 
- };
+};
 
  return (
 
@@ -134,6 +140,11 @@ const ProductPage = () => {
       >
        ₹{product.discount_price}
       </span>
+      {product.stock_quantity === 0 && (
+        <p style={{ color: "red", marginTop: "10px", fontWeight: "bold" }}>
+          Out of stock_quantity
+        </p>
+      )}
 
     </div>
 
@@ -147,22 +158,25 @@ const ProductPage = () => {
 
 
    <button
-     onClick={addToCart}
-     style={{
-       marginTop:"30px",
-       padding:"14px",
-       borderRadius:"10px",
-       border:"none",
-       background:"linear-gradient(135deg,#ff6a5e,#ff3d3d)",
-       color:"#fff",
-       fontWeight:"bold",
-       cursor:"pointer",
-       fontSize:"16px",
-       width:"220px"
-     }}
-   >
-     Add to Cart
-   </button>
+      onClick={addToCart}
+      disabled={product.stock_quantity === 0}
+      style={{
+        marginTop: "30px",
+        padding: "14px",
+        borderRadius: "10px",
+        border: "none",
+        background: product.stock_quantity === 0
+          ? "#ccc"
+          : "linear-gradient(135deg,#ff6a5e,#ff3d3d)",
+        color: "#fff",
+        fontWeight: "bold",
+        cursor: product.stock_quantity === 0 ? "not-allowed" : "pointer",
+        fontSize: "16px",
+        width: "220px"
+      }}
+    >
+      {product.stock_quantity === 0 ? "Out of stock_quantity" : "Add to Cart"}
+    </button>
 
  </div>
 

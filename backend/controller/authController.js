@@ -42,7 +42,7 @@ export const userRegister=async(req,res)=>{
     }catch(err){ console.log("Email sending failed",err.message);}
     return res.status(201).json({message:"User registered,.Please verify your email"}, );
     }catch(err){
-        console.log(err);
+        //console.log(err);
         return res.status(500).json({message:err.message});
     }
 }

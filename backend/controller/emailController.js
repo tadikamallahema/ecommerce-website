@@ -4,7 +4,7 @@ export const verifyEmail = async (req,res)=>{
     try{
 
         const {token} = req.params;
-            console.log(token)
+            //console.log(token)
         const [rows] = await db.execute(
             `SELECT * FROM users 
              WHERE email_verification_token=?`,

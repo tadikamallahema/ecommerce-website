@@ -66,8 +66,8 @@ export const placeOrder = async (req, res) => {
         [orderId, productId, qty, price]
       );
     }
-    await removeCartItems(cart.id);
-    return res.status(201).json({ success: true, message: "Order placed", orderId });
+    //await removeCartItems(cart.id);
+    return res.status(201).json({ success: true, message: "Order Created.Awaiting payment ", orderId });
   } catch (err) {
     console.error("placeOrder error:", err.message);
     return res.status(500).json({ message: err.message });
@@ -139,8 +139,8 @@ export const getUserOrderHistory = async (req, res) => {
 
     return res.status(200).json({success: true,orders: successfulOrders,});
   } catch (err) {
-    console.error(err);
-    console.log(err);
+    //console.error(err);
+    //console.log(err);
     return res.status(500).json({success: false,message: err.message,});
   }
 };

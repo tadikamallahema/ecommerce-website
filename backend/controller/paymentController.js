@@ -2,7 +2,12 @@ import crypto from "crypto";
 import razorpay from "../config/razorPay.js";
 import { getOrderById, updateOrderStatusById } from "../models/orderModel.js";
 import { createPayment, getUserPayments, markPaymentFailure, markPaymentSuccess, updateToVerify } from "../models/paymentModel.js";
+import { getOrderItems } from "../models/orderItemsModel.js";
+import { updateStock } from "../models/productModel.js";
+import { getCartByUser } from "../models/cartModel.js";
+import { removeSingleCartItem } from "../models/cartItemsModel.js";
 
+//maximum payment can be done is 5,00,000
 export const createPaymentOrder=async(req,res)=>{
     try{
         const {orderId}=req.body;
@@ -21,6 +26,7 @@ export const createPaymentOrder=async(req,res)=>{
         res.status(200).json({success: true,    razorpayOrder});
 
     }catch(err){
+        //console.log(err);
         return res.status(500).json({success:false, message:err.message});
     }
 }
@@ -36,9 +42,24 @@ export const verifyPayment=async(req,res)=>{
 
         if (generated_signature === razorpay_signature) {
             const order=await getOrderById(order_id);
+            if (!order) {
+                return res.status(404).json({ success: false, message: "Order not found" });
+            }
+
             await markPaymentSuccess(order_id);
             await updateOrderStatusById(order_id,order.user_id, "paid");
+            //update stock
+            const items=await getOrderItems(order_id);
 
+            for(const item of items){
+                await updateStock(item.product_id,item.quantity);
+            }
+            const cart =await getCartByUser(order.user_id);
+            if(cart){
+                for(const item of items){
+                    await removeSingleCartItem(cart.id,item.product_id);
+                }
+            }
             return res.status(200).json({success: true,message: "Payment successful"});
         } else {
 

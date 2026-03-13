@@ -141,6 +141,7 @@ interface Product {
   price: number;
   discount_price?: number | null;
   main_image?: string;
+  stock_quantity:number;
 }
 
 const CategoryProducts = () => {
@@ -193,6 +194,10 @@ const CategoryProducts = () => {
   };
 
   const addToCart = async (product: Product) => {
+    if(product.stock_quantity === 0){
+      alert("Product is out of stock");
+      return;
+    }
     try {
       await axios.post(
         "http://localhost:2007/api/cart/add",
@@ -208,6 +213,12 @@ const CategoryProducts = () => {
       navigate("/user/cart");
 
     } catch (err: any) {
+      const message = err.response?.data?.message;
+
+    if(message){
+      alert(message);
+      return;
+    }
       alert("Please login first");
       navigate("/login");
     }
