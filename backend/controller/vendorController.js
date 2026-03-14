@@ -1,13 +1,13 @@
 import { createProduct, deleteProduct, getProductByIdAcc, getProductBySlug, getProductsByVendor, updateStock } from "../models/productModel.js";
-import {  getVendors } from "../models/vendorModel.js";
+import {  getOrderByV, getTotalProducts, getTotalSales, getVendors, pendOrders, topProd } from "../models/vendorModel.js";
 
 
 export const getAllVendors=async(req,res)=>{
     try{
         const vendors= await getVendors();
-        return res.status(200).json({success:true,messaage:"List of vendors are",vendors});
+        return res.status(200).json({success:true,message:"List of vendors are",vendors});
     }catch(err){
-        return res.status(500).json({success:false,messaage:err.messaage});
+        return res.status(500).json({success:false,message:err.message});
     }
 }
 
@@ -132,4 +132,67 @@ export const updateStockQuantity=async(req,res)=>{
     }catch (err) {
     return res.status(500).json({ success: false, message: err.message });
   }
+}
+
+
+//vendor dashboard related analytics 
+
+export const getTProducts=async(req,res)=>{
+  const vendorId=req.user.id;
+  if(!vendorId){
+    return res.status(404).json({success:false,message:"No vendor is found"});
+  }
+  try{
+    const products=await getTotalProducts(vendorId);
+    return res.status(200).json({success:true,message:`Products of vendor:${vendorId}`,products});
+  }catch(err){
+    return res.status(500).json({success:false,message:err.message});
+  }
+}
+export const getOrdersByVendors=async(req,res)=>{
+  const vendorId=req.user.id;
+  if(!vendorId){
+    return res.status(404).json({success:false,message:"No vendor is found"});
+  }
+  try{
+    const orders=await getOrderByV(vendorId);
+    return res.status(200).json({success:true,message:`Orders of vendor:${vendorId}`,orders});
+  }catch(err){
+    console.log(err);
+    return res.status(500).json({success:false,message:err.message});
+  }
+}
+export const getTSalesByVendors=async(req,res)=>{
+  const vendorId=req.user.id;
+  if(!vendorId){
+    return res.status(404).json({success:false,message:"No vendor is found"});
+  }
+  try{
+    const sales=await getTotalSales(vendorId);
+    return res.status(200).json({success:true,message:`Sales of vendor:${vendorId}`,sales});
+  }catch(err){
+    console.log(err);
+    return res.status(500).json({success:false,message:err.message});
+  }
+}
+
+export const topSellingProd=async(req,res)=>{
+    const vendorId=req.user.id;
+    try{
+      const products= await topProd(vendorId);
+      return res.status(200).json({success:true,message:`Top selling Products of vendor:${vendorId}`,products});
+    }catch(err){
+      return res.status(500).json({success:false,message:err.message});
+    }
+}
+
+export const pendingOrders=async(req,res)=>{
+  const vendorId=req.user.id;
+  try{
+    const pending= await pendOrders(vendorId);
+      return res.status(200).json({success:true,message:`Pending orders of vendor:${vendorId}`,pending});
+  }catch(err){
+    console.log(err);
+      return res.status(500).json({success:false,message:err.message});
+    }
 }

@@ -99,3 +99,57 @@ export const getPendingVendors=async()=>{
     )
     return res;
 }
+
+//Methods for vendor dashboard analysis things 
+
+export const getTotalProducts=async(vendorId)=>{
+    const [res]=await db.execute(
+        `select count(*) as total_products
+        from product where vendor_id=? and is_active=1`,[vendorId]
+    )
+    return res[0];
+}
+
+export const getOrderByV=async(vendorId)=>{
+    const [res]=await db.execute(
+        `select o.id as orderId,o.user_id,o.total_amount,
+        o.status,o.created_at,oi.product_id,oi.quantity,oi.price,
+        p.name as product_name from orders o join 
+        order_items oi on o.id=oi.order_id
+        join product p on oi.product_id=p.id
+        where p.vendor_id=?`,[vendorId]
+    );
+    return res;
+}
+
+export const getTotalSales=async(vendorId)=>{
+    const [res]=await db.execute(
+        `select sum(oi.price*oi.quantity) as total_Sales
+        from order_items oi join product p on 
+        oi.product_id=p.id join orders o on 
+        oi.order_id=o.id where p.vendor_id=? and o.status='paid'`,
+        [vendorId]
+    );
+    return res[0];
+}
+
+export const topProd=async(vendorId)=>{
+    const [res]=await db.execute(
+        `select p.id,p.name,sum(oi.quantity) as total_sold from order_items oi join product p on
+        oi.product_id=p.id join orders o on oi.order_id=o.id
+        where p.vendor_id=? and o.status='paid'
+        group by p.id order by total_Sold desc
+        limit 3`,[vendorId]
+    );
+    return res;
+}
+
+export const pendOrders=async(vendorId)=>{
+    const [res]=await db.execute(
+        `select count(distinct o.id) as pending_orders from orders o 
+        join order_items oi on o.id=oi.order_id
+        join product p on oi.product_id=p.id
+        where p.vendor_id=? and o.status='pending' `,[vendorId]
+    );
+    return res[0];
+}

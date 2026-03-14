@@ -1,6 +1,6 @@
 
 import express from 'express';
-import { createProductByVendor, deleteProductByVendor, getProductsByVendorV, updateStockQuantity } from '../controller/vendorController.js';
+import { createProductByVendor, deleteProductByVendor, getOrdersByVendors, getProductsByVendorV, getTProducts, getTSalesByVendors, pendingOrders, topSellingProd, updateStockQuantity } from '../controller/vendorController.js';
 import authMiddleware from '../middleware/authMiddleware.js';
 import { authorize } from '../middleware/authorize.js';
 import { AdminDeleteProduct, changeProductStatus } from '../controller/adminController.js';
@@ -17,4 +17,9 @@ vendorRoutes.put('/updatequantity/:productId',authMiddleware,authorize("vendor")
 vendorRoutes.delete('/deleteproduct/:productId',AdminDeleteProduct);
 vendorRoutes.put('/updateprodstatus/:productId',changeProductStatus);
 vendorRoutes.put('/updateprod/:productId',updateProductController);
+vendorRoutes.get('/gettprods',authMiddleware,getTProducts);
+vendorRoutes.get('/getorderv',authMiddleware,getOrdersByVendors);
+vendorRoutes.get('/gettsales',authMiddleware,getTSalesByVendors);
+vendorRoutes.get('/toppro',authMiddleware,topSellingProd);
+vendorRoutes.get('/pendingprod',authMiddleware,pendingOrders);
 export default vendorRoutes;

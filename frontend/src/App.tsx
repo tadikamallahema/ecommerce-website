@@ -31,6 +31,7 @@ import ProductPage from "./user/ProductPage.tsx";
 import ForgetPassword from "./user/ForgetPassword.tsx";
 import ResetPassword from "./user/ResetPassoword.tsx";
 import ManageProducts from "./vendor/ManageProducts.tsx";
+import VendorAnalytics from "./vendor/VendorAnalytics.tsx";
 
 
 function App() {
@@ -118,6 +119,14 @@ function App() {
           element={
             <ProtectedRoutes allowedRoles={["vendor"]}>
               <VendorProduct />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="/vendor/analytics"
+          element={
+            <ProtectedRoutes allowedRoles={["vendor"]}>
+              <VendorAnalytics />
             </ProtectedRoutes>
           }
         />
